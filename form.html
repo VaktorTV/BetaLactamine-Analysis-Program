@@ -1,24 +1,26 @@
-<form action="/main.R" method="post">
+<script type="text/javascript" src="form.js"></script>
+
+<form action="" method="post">
   <div>
     <label for="patientLastName">Nom du Patient :</label>
-    <input type="text" id="patientLastName" name="patient_last_name">
+    <input type="text" id="patientLastName" name="patient_last_name" required>
   </div>
   <br>
   <div>
     <label for="patientFirstName">Pr&eacute;nom du Patient :</label>
-    <input type="text" id="patientFirstName" name="patient_first_name">
+    <input type="text" id="patientFirstName" name="patient_first_name" required>
   </div>
   <br>
   <div>
     <label for="molecule">Traitement :</label>
-    <input type="text" id="molecule" name="molecule">
+    <input type="text" id="molecule" name="molecule" required>
   </div>
   <br>
   <div>
     <label>Mode d'Administration :</label> 
-    <input type="radio" id="administrationContinue" name="administration_mode" value="Continue">
+    <input type="radio" id="administrationContinue" name="administration_mode" value="Continue" required>
     <label for="administrationContinue">Continue</label>
-    <input type="radio" id="administrationDiscontinue" name="administration_mode" value="Discontinue">
+    <input type="radio" id="administrationDiscontinue" name="administration_mode" value="Discontinue" required>
     <label for="administrationDiscontinue">Discontinue</label>
   </div>
   <br>
@@ -44,9 +46,9 @@
   <br>
   <div>
     <label>Bact&eacute;riologie :</label> 
-    <input type="radio" id="bacteriologyConnue" name="bacteriology" value="Connue">
+    <input type="radio" id="bacteriologyConnue" name="bacteriology" value="Connue" required>
     <label for="bacteriologyConnue">Connue</label>
-    <input type="radio" id="bacteriologyInconnue" name="bacteriology" value="Inconnue">
+    <input type="radio" id="bacteriologyInconnue" name="bacteriology" value="Inconnue" required>
     <label for="bacteriologyInconnue">Inconnue</label>
   </div>
   <br>
@@ -57,10 +59,16 @@
   </div>
   <br>
   <div>
+    <label>Cas Particulier : Patient dialys&eacute; ?</label> 
+    <input type="checkbox" id="dialysis" name="dialysis" value="Dialyse">
+    <label for="dialysis">Dialys&eacute;</label>
+  </div>
+  <br>
+  <div>
     <label>Fonction R&eacute;nale :</label> 
-    <input type="radio" id="renalfunctionNormale" name="renal_function" value="Normale">
+    <input type="radio" id="renalfunctionNormale" name="renal_function" value="Normale" required>
     <label for="renalfunctionNormale">Normale</label>
-    <input type="radio" id="renalfunctionAnormale" name="renal_function" value="Anormale">
+    <input type="radio" id="renalfunctionAnormale" name="renal_function" value="Anormale" required>
     <label for="renalfunctionAnormale">Anormale</label>
   </div>
   <br>
@@ -71,7 +79,7 @@
   </div>
   <br>
   <div>
-    <input type="submit" value="Envoyer">
+    <input type="submit" value="Envoyer" onClick="return analysis()">
     <input type="reset" value="R&eacute;initialiser">
     
   </div>

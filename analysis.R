@@ -3,7 +3,7 @@
 library(shiny)
 executeForm <- function()
 {
-  includeHTML("Questions/formulaire.html")
+  includeHTML("form.html")
   
   if (!is.null(htmlOutput("patientLastName")))
   {
@@ -43,6 +43,33 @@ executeForm <- function()
     "ceftriaxone",
     "Ceftriaxone",
     "CEFTRIAXONE",
-    
+    "cloxacilline",
+    "Cloxacilline",
+    "CLOXACILLINE",
+    "ertapénème",
+    "ertapeneme",
+    "Ertapénème",
+    "Ertapeneme",
+    "ERTAPÉNÈME",
+    "ERTAPENEME",
+    "imipénème",
+    "imipeneme",
+    "Imipénème",
+    "Imipeneme",
+    "IMIPÉNÈME",
+    "IMIPENEME",
+    "méropénème",
+    "meropeneme",
+    "Méropénème",
+    "Meropeneme",
+    "MÉROPÉNÈME",
+    "MEROPENEME",
+    "pipéracilline",
+    "piperacilline",
+    "Pipéracilline",
+    "Piperacilline",
+    "PIPÉRACILLINE",
+    "PIPERACILLINE"
   )
+    
 }

@@ -1,9 +1,7 @@
 # INCLUDE SHINY LIBRARY
 library(shiny)
 # INCLUDE APP FILES
-source("patientInformation.R")
 source("menu.R")
-source("Questions/administration.R")
 
 # DEFINE UI PAGE
 ui <- fluidPage(
@@ -24,8 +22,7 @@ ui <- fluidPage(
     sidebarPanel
     (
       titlePanel(h1("INFORMATIONS DU PATIENT", align = "center")),
-      includeHTML("Questions/formulaire.html"),
-      htmlOutput("patientLastName"),
+      includeHTML("form.html"),
     ),
     
     # QUESTIONS AND ANALYSIS PANEL
@@ -36,8 +33,6 @@ ui <- fluidPage(
       (
         h1("ANALYSE", align = "center")
       ),
-      
-      #administration(),
     )
   )
 )
