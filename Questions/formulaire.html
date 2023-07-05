@@ -1,0 +1,78 @@
+<form action="/main.R" method="post">
+  <div>
+    <label for="patientLastName">Nom du Patient :</label>
+    <input type="text" id="patientLastName" name="patient_last_name">
+  </div>
+  <br>
+  <div>
+    <label for="patientFirstName">Pr&eacute;nom du Patient :</label>
+    <input type="text" id="patientFirstName" name="patient_first_name">
+  </div>
+  <br>
+  <div>
+    <label for="molecule">Traitement :</label>
+    <input type="text" id="molecule" name="molecule">
+  </div>
+  <br>
+  <div>
+    <label>Mode d'Administration :</label> 
+    <input type="radio" id="administrationContinue" name="administration_mode" value="Continue">
+    <label for="administrationContinue">Continue</label>
+    <input type="radio" id="administrationDiscontinue" name="administration_mode" value="Discontinue">
+    <label for="administrationDiscontinue">Discontinue</label>
+  </div>
+  <br>
+  <div>
+    <label for="administrationDate">Date d'Administration :</label>
+    <input type="date" id="administrationDate" name="administration_date">
+  </div>
+  <br>
+  <div>
+    <label for="administrationTime">Heure d'Administration :</label>
+    <input type="time" id="administrationTime" name="administration_time">
+  </div>
+  <br>
+  <div>
+    <label for="prelevementDate">Date de Pr&eacute;l&egrave;vement :</label>
+    <input type="date" id="prelevementDate" name="prelevement_date">
+  </div>
+  <br>
+  <div>
+    <label for="prelevementTime">Heure de Pr&eacute;l&egrave;vement :</label>
+    <input type="time" id="prelevementTime" name="prelevement_time">
+  </div>
+  <br>
+  <div>
+    <label>Bact&eacute;riologie :</label> 
+    <input type="radio" id="bacteriologyConnue" name="bacteriology" value="Connue">
+    <label for="bacteriologyConnue">Connue</label>
+    <input type="radio" id="bacteriologyInconnue" name="bacteriology" value="Inconnue">
+    <label for="bacteriologyInconnue">Inconnue</label>
+  </div>
+  <br>
+  <div>
+    <label>Germe R&eacute;sistant ?</label> 
+    <input type="checkbox" id="resistance" name="resistance" value="R&eacute;sistant">
+    <label for="resistance">R&eacute;sistant</label>
+  </div>
+  <br>
+  <div>
+    <label>Fonction R&eacute;nale :</label> 
+    <input type="radio" id="renalfunctionNormale" name="renal_function" value="Normale">
+    <label for="renalfunctionNormale">Normale</label>
+    <input type="radio" id="renalfunctionAnormale" name="renal_function" value="Anormale">
+    <label for="renalfunctionAnormale">Anormale</label>
+  </div>
+  <br>
+  <div>
+    <label>Incoh&eacute;rence avec ant&eacute;riorit&eacute;s et fonction r&eacute;nale ?</label> 
+    <input type="checkbox" id="incoherence" name="incoherence" value="Incoh&eacute;rence">
+    <label for="incoherence">Incoh&eacute;rence</label>
+  </div>
+  <br>
+  <div>
+    <input type="submit" value="Envoyer">
+    <input type="reset" value="R&eacute;initialiser">
+    
+  </div>
+</form>
