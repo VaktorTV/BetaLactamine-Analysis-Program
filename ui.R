@@ -10,9 +10,7 @@ ui <- fluidPage(
   
   # APP TITLE
   titlePanel
-  (
-    h1("DOSAGE D'ANTI-INFECTIEUX", align = "center"),
-  ),
+  (h1("DOSAGE D'ANTI-INFECTIEUX", align = "center")),
 
   sidebarLayout
   (
@@ -28,11 +26,8 @@ ui <- fluidPage(
     # QUESTIONS AND ANALYSIS PANEL
     mainPanel
     (
-
-      titlePanel
-      (
-        h1("ANALYSE", align = "center")
-      ),
+      titlePanel(h1("ANALYSE", align = "center")),
+      includeHTML("output.html"),
     )
   )
 )

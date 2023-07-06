@@ -1,19 +1,59 @@
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::placeholder {
+   text-align: center; 
+}
+
+/* or, for legacy browsers */
+
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+}
+
+input { 
+    text-transform: uppercase;
+}
+</style>
+
 <script type="text/javascript" src="form.js"></script>
 
 <form action="" method="post" onSubmit="return analysis(this)">
   <div>
     <label for="patientLastName">Nom du Patient :</label>
-    <input type="text" id="patientLastName" name="patient_last_name" required>
+    <input type="text" id="patientLastName" name="patient_last_name" placeholder="NOM" autocapitalize="characters" required>
   </div>
   <br>
   <div>
     <label for="patientFirstName">Pr&eacute;nom du Patient :</label>
-    <input type="text" id="patientFirstName" name="patient_first_name" required>
+    <input type="text" id="patientFirstName" name="patient_first_name" placeholder="PR&Eacute;NOM" required>
   </div>
   <br>
   <div>
     <label for="molecule">Traitement :</label>
-    <input type="text" id="molecule" name="molecule" required>
+    <input type="text" id="molecule" name="molecule" placeholder="TRAITEMENT" required>
   </div>
   <br>
   <div>
@@ -26,35 +66,47 @@
   <br>
   <div>
     <label for="dose">Dose :</label> 
-    <input type="number" id="dose" name="dose">
+    <input type="number" style="width:45px;" id="dose" name="dose" placeholder="XXXX">
     <label for="frequence">mg</label> 
-    <input type="number" id="frequence" name="frequence">
+    <input type="number" style="width:25px;" id="frequence" name="frequence" placeholder="N">
     <label>fois par jour</label>
   </div>
   <br>
   <div>
-    <label for="administrationDate">Date d'Administration :</label>
-    <input type="date" id="administrationDate" name="administration_date">
+    <label for="administrationDateDay">Date d'Administration :</label>
+    <input type="number" style="width:30px;" min="01" max="31" id="administrationDateDay" name="administration_date_day" placeholder="JJ">
+    <label for="administrationDateMonth">/</label>
+    <input type="number" style="width:35px;" min="01" max="12" id="administrationDateMonth" name="administration_date_month" placeholder="MM">
+    <label for="administrationDateYear">/</label>
+    <input type="number" style="width:45px;" min="2023" max="2100" id="administrationDateYear" name="administration_date_year" placeholder="AAAA">
   </div>
   <br>
   <div>
-    <label for="administrationTime">Heure d'Administration :</label>
-    <input type="time" id="administrationTime" name="administration_time">
+    <label for="administrationTimeHour">Heure d'Administration :</label>
+    <input type="number" style="width:35px;" min="00" max="23" id="administrationTimeHour" name="administration_time_hour" placeholder="HH">
+    <label for="administrationTimeMin">:</label>
+    <input type="number" style="width:35px;" min="00" max="60" id="administrationTimeMin" name="administration_time_min" placeholder="MM">
   </div>
   <br>
   <div>
-    <label for="prelevementDate">Date de Pr&eacute;l&egrave;vement :</label>
-    <input type="date" id="prelevementDate" name="prelevement_date">
+    <label for="prelevementDateDay">Date de Pr&eacute;l&egrave;vement :</label>
+    <input type="number" style="width:30px;" min="01" max="31" id="prelevementDateDay" name="prelevement_date_day" placeholder="JJ">
+    <label for="prelevementDateMonth">/</label>
+    <input type="number" style="width:35px;" min="01" max="12" id="prelevementDateMonth" name="prelevement_date_month" placeholder="MM">
+    <label for="prelevementDateYear">/</label>
+    <input type="number" style="width:45px;" min="2023" max="2100" id="prelevementDateYear" name="prelevement_date_year" placeholder="AAAA">
   </div>
   <br>
   <div>
-    <label for="prelevementTime">Heure de Pr&eacute;l&egrave;vement :</label>
-    <input type="time" id="prelevementTime" name="prelevement_time">
+    <label for="prelevementTimeHour">Heure de Pr&eacute;l&egrave;vement :</label>
+    <input type="number" style="width:35px;" min="00" max="23" id="prelevementTimeHour" name="prelevement_time_hour" placeholder="hh">
+    <label for="prelevementTimeMin">:</label>
+    <input type="number" style="width:35px;" min="00" max="60" id="prelevementTimeMin" name="prelevement_time_min" placeholder="mm">
   </div>
   <br>
   <div>
     <label for="concentration">Concentration :</label>
-    <input type="number" step="0.01" id="concentration" name="concentration">
+    <input type="number" style="width:50px;" step="0.01" id="concentration" name="concentration" placeholder="00.00" required>
     <label>mg/L</label>
   </div>
   <br>
@@ -88,7 +140,8 @@
   <br>
   <div>
     <label for="dfg">DFG :</label> 
-    <input type="number" id="dfg" name="dfg">
+    <input type="number" style="width:45px;" id="dfg" name="dfg" placeholder="DFG">
+    <label>L/h</label>
   </div>
   <br>
   <div>
