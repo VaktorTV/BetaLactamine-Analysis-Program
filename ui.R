@@ -21,6 +21,7 @@ ui <- fluidPage(
     (
       titlePanel(h1("INFORMATIONS DU PATIENT", align = "center")),
       includeHTML("form.html"),
+      tags$script(src="form.js"),
     ),
     
     # QUESTIONS AND ANALYSIS PANEL

@@ -1,40 +1,39 @@
 function analysis() {
-  event.preventDefault();
   
-  patientlastname = document.getElementById("patientLastName").value;
-  patientfirstname = document.getElementById("patientFirstName").value;
-  molecule = document.getElementById("molecule").value;
-  dose = document.getElementById("dose").value;
-  frequence = document.getElementById("frequence").value;
-  administrationdateday = document.getElementById("administrationDateDay").value;
-  administrationdatemonth = document.getElementById("administrationDateMonth").value;
-  administrationdateyear = document.getElementById("administrationDateYear").value;
-  administrationtimehour = document.getElementById("administrationTimeHour").value;
-  administrationtimemin = document.getElementById("administrationTimeMin").value;
-  prelevementdateday = document.getElementById("prelevementDateDay").value;
-  prelevementdatemonth = document.getElementById("prelevementDateMonth").value;
-  prelevementdateyear = document.getElementById("prelevementDateYear").value;
-  prelevementtimehour = document.getElementById("prelevementTimeHour").value;
-  prelevementtimemin = document.getElementById("prelevementTimeMin").value;
-  concentration = document.getElementById("concentration").value;
-  resistance = document.getElementById("resistance").checked;
-  dialysis = document.getElementById("dialysis").checked;
-  dfg = document.getElementById("dfg").value;
-  incoherence = document.getElementById("incoherence").checked;
-    
-  administrationdate = 0;
-  prelevementdate = 0;
-  cmi = 0;
-  fractionLibre = 0;
-  concentrationLibre = 0;
-  tau = 0;
-  deltat = 0;
-  cres = 0;
-  demivie_theorique = 0;
-  demivie_patient = 0;
-    
-  dfive = "GERME CONNU + CMI CONNUE : Concentration efficace au vu des résultats de bactériologie ( Bactérie dans nature prélèvement du date du prélèvement, CMI =  XX mg/L) et selon les recommandations appliquées en réanimation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs, cette concentration ne traduit pas de surexposition.";
+  var patientlastname = document.getElementById("patientLastName").value;
+  var patientfirstname = document.getElementById("patientFirstName").value;
+  var molecule = document.getElementById("molecule").value;
+  var dose = document.getElementById("dose").value;
+  var frequence = document.getElementById("frequence").value;
+  var administrationdateday = document.getElementById("administrationDateDay").value;
+  var administrationdatemonth = document.getElementById("administrationDateMonth").value;
+  var administrationdateyear = document.getElementById("administrationDateYear").value;
+  var administrationtimehour = document.getElementById("administrationTimeHour").value;
+  var administrationtimemin = document.getElementById("administrationTimeMin").value;
+  var prelevementdateday = document.getElementById("prelevementDateDay").value;
+  var prelevementdatemonth = document.getElementById("prelevementDateMonth").value;
+  var prelevementdateyear = document.getElementById("prelevementDateYear").value;
+  var prelevementtimehour = document.getElementById("prelevementTimeHour").value;
+  var prelevementtimemin = document.getElementById("prelevementTimeMin").value;
+  var concentration = document.getElementById("concentration").value;
+  var resistance = document.getElementById("resistance").checked;
+  var dialysis = document.getElementById("dialysis").checked;
+  var dfg = document.getElementById("dfg").value;
+  var incoherence = document.getElementById("incoherence").checked;
   
+  var administrationdate = 0;
+  var prelevementdate = 0;
+  var cmi = 0;
+  var fractionLibre = 0;
+  var concentrationLibre = 0;
+  var tau = 0;
+  var deltat = 0;
+  var cres = 0;
+  var demivie_theorique = 0;
+  var demivie_patient = 0;
+  
+  var dfive = "GERME CONNU + CMI CONNUE : Concentration efficace au vu des résultats de bactériologie ( Bactérie dans nature prélèvement du date du prélèvement, CMI =  XX mg/L) et selon les recommandations appliquées en réanimation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs, cette concentration ne traduit pas de surexposition.";
+
   switch (molecule) {
     case "amoxicilline":
       break;
@@ -157,48 +156,6 @@ function analysis() {
   }
 }
 
-function showOutput()
-{
-  document.getElementById("outputName").innerHTML = "NOM : " + patientlastname + " " + patientfirstname;
-  document.getElementById("outputMolecule").innerHTML = "TRAITEMENT : " + molecule;
-  if (document.getElementById("administrationContinue").checked == true)
-  {
-    document.getElementById("outputAdministrationMode").innerHTML = "MODE D'ADMINISTRATION : CONTINU";
-  }
-  else if (document.getElementById("administrationDiscontinue").checked == true)
-  {
-    document.getElementById("outputAdministrationMode").innerHTML = "MODE D'ADMINISTRATION : DISCONTINU";
-  }
-  document.getElementById("outputDose").innerHTML = "DOSE : " + dose + " mg " + frequence + " fois par jour";
-  document.getElementById("outputAdministrationDate").innerHTML = "DATE D'ADMINISTRATION : " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear;
-  document.getElementById("outputAdministrationTime").innerHTML = "HEURE D'ADMINISTRATION : " + administrationtimehour + ":" + administrationtimemin;
-  document.getElementById("outputPrelevementDate").innerHTML = "DATE DE PRELEVEMENT : " + prelevementdateday + "/" + prelevementdatemonth + "/" + prelevementdateyear;
-  document.getElementById("outputPrelevementTime").innerHTML = "HEURE DE PRELEVEMENT : " + prelevementtimehour + ":" + prelevementtimemin;
-  if (document.getElementById("administrationContinue").checked == true)
-  {
-    document.getElementById("outputConcentration").innerHTML = "CONCENTRATION A L'EQUILIBRE : " + concentration;
-  }
-  else if (document.getElementById("administrationDiscontinue").checked == true)
-  {
-    administrationdate = (administrationdateday*24*60)+(administrationdatemonth*30*24*60)+(administrationdateyear*365*24*60)+(administrationtimehour*60)+(administrationtimemin);
-    prelevementdate = (prelevementdateday*24*60)+(prelevementdatemonth*30*24*60)+(prelevementdateyear*365*24*60)+(prelevementtimehour*60)+(prelevementtimemin);
-    deltat = (prelevementdate - administrationdate)/60;
-    tau = 24/frequence;
-    if (deltat < tau)
-    {
-      demivie_theorique = 2;
-      demivie_patient = demivie_theorique *(120/dfg);
-      cres = concentration * Math.exp((-Math.log(2))/(demivie_patient*deltat));
-      document.getElementById("outputConcentration").innerHTML = "CONCENTRATION RESIDUELLE CALCULEE/ESTIMEE : " + cres;
-    }
-    else
-    {
-      document.getElementById("outputConcentration").innerHTML = "CONCENTRATION RESIDUELLE VRAIE : " + concentration;
-    }
-  }
-
-}
-
 function cefepime()
 {
   if (document.getElementById("administrationContinue").checked == true)
@@ -210,18 +167,20 @@ function cefepime()
       concentrationLibre = concentration * fractionLibre;
       if (concentrationLibre < 4*cmi)
       {
-        showOutput();
         document.write("CONCENTRATION INFRA-THÉRAPEUTIQUE");
       }
+      else if (concentration > 8*cmi)
+      {
+      document.write("CONCENTRATION SUPRA-THÉRAPEUTIQUE");
+       }
       else if (concentration > 35)
       {
-        showOutput();
-        document.write ("CONCENTRATION SUPRA-THÉRAPEUTIQUE");
+      document.write ("CONCENTRATION SUPRA-THÉRAPEUTIQUE");
       }
       else
       {
-        showOutput();
-        document.getElementById("output").innerHTML = dfive;
+        window.open("output.html");
+        document.write(dfive);
       }
     }
     else if (document.getElementById("bacteriologyInconnue").checked == true)
@@ -277,6 +236,10 @@ function cefepime()
           {
             document.write("CONCENTRATION INFRA-THÉRAPEUTIQUE");
           }
+          else if (concentrationLibre > 8*CMI)
+          {
+            document.write("CONCENTRATION SUPRA-THÉRAPEUTIQUE");
+          }
           else if (cres > 20)
           {
             document.write("CONCENTRATION SUPRA-THÉRAPEUTIQUE");
@@ -322,6 +285,10 @@ function cefepime()
           if (concentrationLibre < 4*CMI)
           {
             document.write("CONCENTRATION INFRA-THÉRAPEUTIQUE");
+          }
+          else if (concentrationLibre > 8*CMI)
+          {
+            document.write("CONCENTRATION SUPRA-THÉRAPEUTIQUE");
           }
           else if (concentration > 20)
           {

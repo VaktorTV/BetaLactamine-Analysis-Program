@@ -1,158 +1,180 @@
-<style>
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-::placeholder {
-   text-align: center; 
-}
-
-/* or, for legacy browsers */
-
-::-webkit-input-placeholder {
-   text-align: center;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-   text-align: center;  
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-   text-align: center;  
-}
-
-:-ms-input-placeholder {  
-   text-align: center; 
-}
-
-input { 
-    text-transform: uppercase;
-}
-</style>
-
-<script type="text/javascript" src="form.js"></script>
-
-<form action="" method="post" onSubmit="return analysis(this)">
-  <div>
-    <label for="patientLastName">Nom du Patient :</label>
-    <input type="text" id="patientLastName" name="patient_last_name" placeholder="NOM" autocapitalize="characters" required>
-  </div>
-  <br>
-  <div>
-    <label for="patientFirstName">Pr&eacute;nom du Patient :</label>
-    <input type="text" id="patientFirstName" name="patient_first_name" placeholder="PR&Eacute;NOM" required>
-  </div>
-  <br>
-  <div>
-    <label for="molecule">Traitement :</label>
-    <input type="text" id="molecule" name="molecule" placeholder="TRAITEMENT" required>
-  </div>
-  <br>
-  <div>
-    <label>Mode d'Administration :</label> 
-    <input type="radio" id="administrationContinue" name="administration_mode" value="Continue" required>
-    <label for="administrationContinue">Continue</label>
-    <input type="radio" id="administrationDiscontinue" name="administration_mode" value="Discontinue" required>
-    <label for="administrationDiscontinue">Discontinue</label>
-  </div>
-  <br>
-  <div>
-    <label for="dose">Dose :</label> 
-    <input type="number" style="width:45px;" id="dose" name="dose" placeholder="XXXX">
-    <label for="frequence">mg</label> 
-    <input type="number" style="width:25px;" id="frequence" name="frequence" placeholder="N">
-    <label>fois par jour</label>
-  </div>
-  <br>
-  <div>
-    <label for="administrationDateDay">Date d'Administration :</label>
-    <input type="number" style="width:30px;" min="01" max="31" id="administrationDateDay" name="administration_date_day" placeholder="JJ">
-    <label for="administrationDateMonth">/</label>
-    <input type="number" style="width:35px;" min="01" max="12" id="administrationDateMonth" name="administration_date_month" placeholder="MM">
-    <label for="administrationDateYear">/</label>
-    <input type="number" style="width:45px;" min="2023" max="2100" id="administrationDateYear" name="administration_date_year" placeholder="AAAA">
-  </div>
-  <br>
-  <div>
-    <label for="administrationTimeHour">Heure d'Administration :</label>
-    <input type="number" style="width:35px;" min="00" max="23" id="administrationTimeHour" name="administration_time_hour" placeholder="HH">
-    <label for="administrationTimeMin">:</label>
-    <input type="number" style="width:35px;" min="00" max="60" id="administrationTimeMin" name="administration_time_min" placeholder="MM">
-  </div>
-  <br>
-  <div>
-    <label for="prelevementDateDay">Date de Pr&eacute;l&egrave;vement :</label>
-    <input type="number" style="width:30px;" min="01" max="31" id="prelevementDateDay" name="prelevement_date_day" placeholder="JJ">
-    <label for="prelevementDateMonth">/</label>
-    <input type="number" style="width:35px;" min="01" max="12" id="prelevementDateMonth" name="prelevement_date_month" placeholder="MM">
-    <label for="prelevementDateYear">/</label>
-    <input type="number" style="width:45px;" min="2023" max="2100" id="prelevementDateYear" name="prelevement_date_year" placeholder="AAAA">
-  </div>
-  <br>
-  <div>
-    <label for="prelevementTimeHour">Heure de Pr&eacute;l&egrave;vement :</label>
-    <input type="number" style="width:35px;" min="00" max="23" id="prelevementTimeHour" name="prelevement_time_hour" placeholder="hh">
-    <label for="prelevementTimeMin">:</label>
-    <input type="number" style="width:35px;" min="00" max="60" id="prelevementTimeMin" name="prelevement_time_min" placeholder="mm">
-  </div>
-  <br>
-  <div>
-    <label for="concentration">Concentration :</label>
-    <input type="number" style="width:50px;" step="0.01" id="concentration" name="concentration" placeholder="00.00" required>
-    <label>mg/L</label>
-  </div>
-  <br>
-  <div>
-    <label>Bact&eacute;riologie :</label> 
-    <input type="radio" id="bacteriologyConnue" name="bacteriology" value="Connue" required>
-    <label for="bacteriologyConnue">Connue</label>
-    <input type="radio" id="bacteriologyInconnue" name="bacteriology" value="Inconnue" required>
-    <label for="bacteriologyInconnue">Inconnue</label>
-  </div>
-  <br>
-  <div>
-    <label>Germe R&eacute;sistant ?</label> 
-    <input type="checkbox" id="resistance" name="resistance" value="R&eacute;sistant">
-    <label for="resistance">R&eacute;sistant</label>
-  </div>
-  <br>
-  <div>
-    <label>Cas Particulier : Patient dialys&eacute; ?</label> 
-    <input type="checkbox" id="dialysis" name="dialysis" value="Dialyse">
-    <label for="dialysis">Dialys&eacute;</label>
-  </div>
-  <br>
-  <div>
-    <label>Fonction R&eacute;nale :</label> 
-    <input type="radio" id="renalfunctionNormale" name="renal_function" value="Normale" required>
-    <label for="renalfunctionNormale">Normale</label>
-    <input type="radio" id="renalfunctionAnormale" name="renal_function" value="Anormale" required>
-    <label for="renalfunctionAnormale">Anormale</label>
-  </div>
-  <br>
-  <div>
-    <label for="dfg">DFG :</label> 
-    <input type="number" style="width:45px;" id="dfg" name="dfg" placeholder="DFG">
-    <label>L/h</label>
-  </div>
-  <br>
-  <div>
-    <label>Incoh&eacute;rence avec ant&eacute;riorit&eacute;s et fonction r&eacute;nale ?</label> 
-    <input type="checkbox" id="incoherence" name="incoherence" value="Incoh&eacute;rence">
-    <label for="incoherence">Incoh&eacute;rence</label>
-  </div>
-  <br>
-  <div>
-    <input type="submit" value="Envoyer" onClick="return analysis(this)">
-    <input type="reset" value="R&eacute;initialiser">
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="form.js"></script>
+    <link rel="stylesheet" href="form.css">
     
-  </div>
-</form>
+    <style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    ::placeholder {
+       text-align: center; 
+    }
+    /* or, for legacy browsers */
+    ::-webkit-input-placeholder {
+       text-align: center;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+       text-align: center;  
+    }
+    ::-moz-placeholder {  /* Firefox 19+ */
+       text-align: center;  
+    }
+    :-ms-input-placeholder {  
+       text-align: center; 
+    }
+    input { 
+        text-transform: uppercase;
+    }
+    </style>
+  </head>
+  
+  <body>
+    <div class ="patientInformation">
+      <h1> INFORMATIONS DU PATIENT</h1>
+      <form id="form" name="form" action="" method="post" onSubmit="return analysis()">
+        <div>
+          <label for="patientLastName">Nom du Patient :</label>
+          <input type="text" id="patientLastName" name="patient_last_name" placeholder="NOM" autocapitalize="characters" required>
+        </div>
+        <br>
+        <div>
+          <label for="patientFirstName">Pr&eacute;nom du Patient :</label>
+          <input type="text" id="patientFirstName" name="patient_first_name" placeholder="PR&Eacute;NOM" required>
+        </div>
+        <br>
+        <div>
+          <label for="molecule">Traitement :</label>
+          <input type="text" id="molecule" name="molecule" placeholder="TRAITEMENT" required>
+        </div>
+        <br>
+        <div>
+          <label>Mode d'Administration :</label> 
+          <input type="radio" id="administrationContinue" name="administration_mode" value="Continue" required>
+          <label for="administrationContinue">Continue</label>
+          <input type="radio" id="administrationDiscontinue" name="administration_mode" value="Discontinue" required>
+          <label for="administrationDiscontinue">Discontinue</label>
+        </div>
+        <br>
+        <div>
+          <label for="dose">Dose :</label> 
+          <input type="number" style="width:45px;" id="dose" name="dose" placeholder="XXXX">
+          <label for="frequence">mg</label> 
+          <input type="number" style="width:25px;" id="frequence" name="frequence" placeholder="N">
+          <label>fois par jour</label>
+        </div>
+        <br>
+        <div>
+          <label for="administrationDateDay">Date d'Administration :</label>
+          <input type="number" style="width:30px;" min="01" max="31" id="administrationDateDay" name="administration_date_day" placeholder="JJ">
+          <label for="administrationDateMonth">/</label>
+          <input type="number" style="width:35px;" min="01" max="12" id="administrationDateMonth" name="administration_date_month" placeholder="MM">
+          <label for="administrationDateYear">/</label>
+          <input type="number" style="width:45px;" min="2023" max="2100" id="administrationDateYear" name="administration_date_year" placeholder="AAAA">
+        </div>
+        <br>
+        <div>
+          <label for="administrationTimeHour">Heure d'Administration :</label>
+          <input type="number" style="width:35px;" min="00" max="23" id="administrationTimeHour" name="administration_time_hour" placeholder="HH">
+          <label for="administrationTimeMin">:</label>
+          <input type="number" style="width:35px;" min="00" max="60" id="administrationTimeMin" name="administration_time_min" placeholder="MM">
+        </div>
+        <br>
+        <div>
+          <label for="prelevementDateDay">Date de Pr&eacute;l&egrave;vement :</label>
+          <input type="number" style="width:30px;" min="01" max="31" id="prelevementDateDay" name="prelevement_date_day" placeholder="JJ">
+          <label for="prelevementDateMonth">/</label>
+          <input type="number" style="width:35px;" min="01" max="12" id="prelevementDateMonth" name="prelevement_date_month" placeholder="MM">
+          <label for="prelevementDateYear">/</label>
+          <input type="number" style="width:45px;" min="2023" max="2100" id="prelevementDateYear" name="prelevement_date_year" placeholder="AAAA">
+        </div>
+        <br>
+        <div>
+          <label for="prelevementTimeHour">Heure de Pr&eacute;l&egrave;vement :</label>
+          <input type="number" style="width:35px;" min="00" max="23" id="prelevementTimeHour" name="prelevement_time_hour" placeholder="hh">
+          <label for="prelevementTimeMin">:</label>
+          <input type="number" style="width:35px;" min="00" max="60" id="prelevementTimeMin" name="prelevement_time_min" placeholder="mm">
+        </div>
+        <br>
+        <div>
+          <label for="concentration">Concentration :</label>
+          <input type="number" style="width:50px;" step="0.01" id="concentration" name="concentration" placeholder="00.00" required>
+          <label>mg/L</label>
+        </div>
+        <br>
+        <div>
+          <label>Bact&eacute;riologie :</label> 
+          <input type="radio" id="bacteriologyConnue" name="bacteriology" value="Connue" required>
+          <label for="bacteriologyConnue">Connue</label>
+          <input type="radio" id="bacteriologyInconnue" name="bacteriology" value="Inconnue" required>
+          <label for="bacteriologyInconnue">Inconnue</label>
+        </div>
+        <br>
+        <div>
+          <label>Germe R&eacute;sistant ?</label> 
+          <input type="checkbox" id="resistance" name="resistance" value="R&eacute;sistant">
+          <label for="resistance">R&eacute;sistant</label>
+        </div>
+        <br>
+        <div>
+          <label>Cas Particulier : Patient dialys&eacute; ?</label> 
+          <input type="checkbox" id="dialysis" name="dialysis" value="Dialyse">
+          <label for="dialysis">Dialys&eacute;</label>
+        </div>
+        <br>
+        <div>
+          <label>Fonction R&eacute;nale :</label> 
+          <input type="radio" id="renalfunctionNormale" name="renal_function" value="Normale" required>
+          <label for="renalfunctionNormale">Normale</label>
+          <input type="radio" id="renalfunctionAnormale" name="renal_function" value="Anormale" required>
+          <label for="renalfunctionAnormale">Anormale</label>
+        </div>
+        <br>
+        <div>
+          <label for="dfg">DFG :</label> 
+          <input type="number" style="width:45px;" id="dfg" name="dfg" placeholder="DFG">
+          <label>L/h</label>
+        </div>
+        <br>
+        <div>
+          <label>Incoh&eacute;rence avec ant&eacute;riorit&eacute;s et fonction r&eacute;nale ?</label> 
+          <input type="checkbox" id="incoherence" name="incoherence" value="Incoh&eacute;rence">
+          <label for="incoherence">Incoh&eacute;rence</label>
+        </div>
+        <br>
+        <div>
+          <input type="submit" value="Envoyer" onclick="return analysis()">
+          <input type="reset" value="R&eacute;initialiser">
+        </div>
+        <br>
+      </form>
+    </div>
+    
+    <div class="output">
+      <h1>INTERPR&Eacute;TATION</h1>
+      <p class="output" id="outputName"></p>
+      <p class="output" id="outputMolecule"></p>
+      <p class="output" id="outputAdministrationMode"></p>
+      <p class="output" id="outputDose"></p>
+      <p class="output" id="outputAdministrationDate"></p>
+      <p class="output" id="outputAdministrationTime"></p>
+      <p class="output" id="outputPrelevementDate"></p>
+      <p class="output" id="outputPrelevementTime"></p>
+      <p class="output" id="outputConcentration"></p>
+      <p class="output" id="outputBacteriology"></p>
+      <p class="output" id="outputResistance"></p>
+      <p class="output" id="outputDialysis"></p>
+      <p class="output" id="outputRenalFunction"></p>
+      <p class="output" id="outputDFG"></p>
+      <p class="output" id="outputIncoherence"></p>
+    </div>
+  </body>
+</html>
