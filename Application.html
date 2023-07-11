@@ -46,7 +46,7 @@
         <form id="myForm" name="form" action="" method="post" onSubmit="return analysis()">
           <div>
             <label for="molecule">Traitement :</label>
-            <input type="text" id="molecule" name="molecule" placeholder="TRAITEMENT" required>
+            <input type="text" id="molecule" name="molecule" onInput="moleculeUpdate()" placeholder="TRAITEMENT" required>
           </div>
           <br>
           <div>
@@ -161,6 +161,13 @@
             <label>L/h</label>
           </div>
           <br>
+          <div class="albumine">
+            <label for="albumine">Albumin&eacute;mie :</label> 
+            <input type="number" style="width:40px;" id="albumine" name="albumine" placeholder="00.00">
+            <label>g/L</label>
+            <br>
+            <br>
+          </div>
           <div>
             <label>Incoh&eacute;rence avec ant&eacute;riorit&eacute;s et fonction r&eacute;nale ?</label> 
             <input type="checkbox" id="incoherence" name="incoherence" value="Incoh&eacute;rence">
@@ -196,6 +203,7 @@
         <p class="output" id="outputDialysis"></p>
         <p class="output" id="outputRenalFunction"></p>
         <p class="output" id="outputDFG"></p>
+        <p class="output" id="outputAlbumine"></p>
         <p class="output" id="outputIncoherence"></p>
         <p class = "output" id="output"></p>
         <p class = "output" id="output2"></p>
