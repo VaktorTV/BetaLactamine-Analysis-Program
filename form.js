@@ -306,20 +306,21 @@ function showOutput()
     document.getElementById("outputBacteriology").innerHTML = "BACTERIOLOGIE : connue";
     document.getElementById("outputBactery").innerHTML = "BACTERIE : " + bactery;
     document.getElementById("outputCMI").innerHTML = "CMI : " + cmi + " mg/L";
+    if (document.getElementById("resistance").checked == true)
+    {
+      document.getElementById("outputResistance").innerHTML = "GERME RESISTANT : oui";
+    }
+    else if (document.getElementById("resistance").checked == false)
+    {
+      document.getElementById("outputResistance").innerHTML = "GERME RESISTANT : non";
+    }
   }
   else if (document.getElementById("bacteriologyInconnue").checked == true)
   {
     document.getElementById("outputBacteriology").innerHTML = "BACTERIOLOGIE : inconnue";
     document.getElementById("outputBactery").innerHTML = "";
     document.getElementById("outputCMI").innerHTML = "";
-  }
-  if (document.getElementById("resistance").checked == true)
-  {
-    document.getElementById("outputResistance").innerHTML = "GERME RESISTANT : oui";
-  }
-  else if (document.getElementById("resistance").checked == false)
-  {
-    document.getElementById("outputResistance").innerHTML = "GERME RESISTANT : non";
+    document.getElementById("outputResistance").innerHTML = "";
   }
   if (document.getElementById("dialysis").checked == true)
   {
