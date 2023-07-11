@@ -40,7 +40,7 @@
   <body>
     <div class ="patientInformation">
       <h1> INFORMATIONS DU PATIENT</h1>
-      <form id="form" name="form" action="" method="post" onSubmit="return analysis()">
+      <form id="myForm" name="form" action="" method="post" onSubmit="return analysis()">
         <div>
           <label for="molecule">Traitement :</label>
           <input type="text" id="molecule" name="molecule" placeholder="TRAITEMENT" required>
@@ -48,9 +48,9 @@
         <br>
         <div>
           <label>Mode d'Administration :</label> 
-          <input type="radio" id="administrationContinue" name="administration_mode" value="Continue" required>
+          <input type="radio" id="administrationContinue" name="administration_mode" value="Continue" onChange="return administrationUpdate()" required>
           <label for="administrationContinue">Continue</label>
-          <input type="radio" id="administrationDiscontinue" name="administration_mode" value="Discontinue" required>
+          <input type="radio" id="administrationDiscontinue" name="administration_mode" value="Discontinue" onChange="return administrationUpdate()" required>
           <label for="administrationDiscontinue">Discontinue</label>
         </div>
         <br>
@@ -63,21 +63,23 @@
         </div>
         <br>
         <div class="administrationDate">
-          <label class="administrationDate" for="administrationDateDay">Date d'Administration :</label>
-          <input class="administrationDate" type="number" style="width:25px;" min="01" max="31" id="administrationDateDay" name="administration_date_day" placeholder="JJ">
-          <label class="administrationDate" for="administrationDateMonth">/</label>
-          <input class="administrationDate" type="number" style="width:30px;" min="01" max="12" id="administrationDateMonth" name="administration_date_month" placeholder="MM">
-          <label class="administrationDate" for="administrationDateYear">/</label>
-          <input class="administrationDate" type="number" style="width:40px;" min="2023" max="2100" id="administrationDateYear" name="administration_date_year" placeholder="AAAA">
+          <div>
+            <label for="administrationDateDay">Date d'Administration :</label>
+            <input type="number" style="width:25px;" min="01" max="31" id="administrationDateDay" name="administration_date_day" placeholder="JJ">
+            <label for="administrationDateMonth">/</label>
+            <input type="number" style="width:30px;" min="01" max="12" id="administrationDateMonth" name="administration_date_month" placeholder="MM">
+            <label for="administrationDateYear">/</label>
+            <input type="number" style="width:40px;" min="2023" max="2100" id="administrationDateYear" name="administration_date_year" placeholder="AAAA">
+          </div>
+          <br>
+          <div>
+            <label for="administrationTimeHour">Heure d'Administration :</label>
+            <input type="number" style="width:30px;" min="00" max="23" id="administrationTimeHour" name="administration_time_hour" placeholder="HH">
+            <label for="administrationTimeMin">:</label>
+            <input type="number" style="width:30px;" min="00" max="60" id="administrationTimeMin" name="administration_time_min" placeholder="MM">
+          </div>
+          <br>
         </div>
-        <br>
-        <div class="administrationDate">
-          <label class="administrationDate" for="administrationTimeHour">Heure d'Administration :</label>
-          <input class="administrationDate" type="number" style="width:30px;" min="00" max="23" id="administrationTimeHour" name="administration_time_hour" placeholder="HH">
-          <label class="administrationDate" for="administrationTimeMin">:</label>
-          <input class="administrationDate" type="number" style="width:30px;" min="00" max="60" id="administrationTimeMin" name="administration_time_min" placeholder="MM">
-        </div>
-        <br>
         <div>
           <label for="prelevementDateDay">Date de Pr&eacute;l&egrave;vement :</label>
           <input type="number" style="width:25px;" min="01" max="31" id="prelevementDateDay" name="prelevement_date_day" placeholder="JJ">
@@ -102,35 +104,52 @@
         <br>
         <div>
           <label>Bact&eacute;riologie :</label> 
-          <input type="radio" id="bacteriologyConnue" name="bacteriology" value="Connue" required>
+          <input type="radio" id="bacteriologyConnue" name="bacteriology" value="Connue" onChange="return bacteriologyUpdate()" required>
           <label for="bacteriologyConnue">Connue</label>
-          <input type="radio" id="bacteriologyInconnue" name="bacteriology" value="Inconnue" required>
+          <input type="radio" id="bacteriologyInconnue" name="bacteriology" value="Inconnue" onChange="return bacteriologyUpdate()" required>
           <label for="bacteriologyInconnue">Inconnue</label>
         </div>
         <br>
-        <div>
-          <label class="cmi">CMI / Breakpoint (seuil) :</label> 
-          <input type="number" class="cmi" style="width:45px;" id="cmi" name="cmi" placeholder="00.00" required>
+        <div class="bacteriologyInformation">
+          <div>
+            <label>Bact&eacute;rie :</label> 
+            <input list="bacteries" id="bactery" name="bactery">
+          </div>
+          <datalist id="bacteries">
+            <option value="Acinetobacter baumanii">
+            <option value="Acinetobacter ursungii">
+            <option value="Citrobacter freundii">
+            <option value="Citrobacter koseri">
+            <option value="Enterobacter sp">
+            <option value="Escherichia coli">
+            <option value="Hafnia alvei">
+            <option value="Klebsiella oxytoca">
+            <option value="Klebsiella pneumoniae">
+            <option value="Morganella sp">
+            <option value="Proteus mirabilis">
+            <option value="Proteus vulgaris">
+            <option value="Providencia sp">
+            <option value="Pseudomonas aeruginosa">
+            <option value="Serratia sp">
+            <option value="Stenotrophomonas maltophilia">
+          </datalist>
+          <br>
+          <div>
+            <label>CMI / Breakpoint (seuil) :</label> 
+            <input type="number" style="width:45px;" id="cmi" name="cmi" placeholder="00.00" required>
+          </div>
+          <br>
+          <div>
+            <label>Germe R&eacute;sistant ?</label> 
+            <input type="checkbox" id="resistance" name="resistance" value="R&eacute;sistant">
+            <label for="resistance">R&eacute;sistant</label>
+          </div>
+          <br>
         </div>
-        <br>
-        <div>
-          <label>Germe R&eacute;sistant ?</label> 
-          <input type="checkbox" id="resistance" name="resistance" value="R&eacute;sistant">
-          <label for="resistance">R&eacute;sistant</label>
-        </div>
-        <br>
         <div>
           <label>Cas Particulier : Patient dialys&eacute; ?</label> 
           <input type="checkbox" id="dialysis" name="dialysis" value="Dialyse">
           <label for="dialysis">Dialys&eacute;</label>
-        </div>
-        <br>
-        <div>
-          <label>Fonction R&eacute;nale :</label> 
-          <input type="radio" id="renalFunctionNormale" name="renal_function" value="Normale" required>
-          <label for="renalFunctionNormale">Normale</label>
-          <input type="radio" id="renalFunctionAnormale" name="renal_function" value="Anormale" required>
-          <label for="renalFunctionAnormale">Anormale</label>
         </div>
         <br>
         <div>
@@ -164,6 +183,8 @@
       <p class="output" id="outputPrelevementTime"></p>
       <p class="output" id="outputConcentration"></p>
       <p class="output" id="outputBacteriology"></p>
+      <p class="output" id="outputBactery"></p>
+      <p class="output" id="outputCMI"></p>
       <p class="output" id="outputResistance"></p>
       <p class="output" id="outputDialysis"></p>
       <p class="output" id="outputRenalFunction"></p>
