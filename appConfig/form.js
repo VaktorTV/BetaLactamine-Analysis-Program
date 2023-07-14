@@ -12,7 +12,7 @@ function moleculeUpdate()
 
 function administrationUpdate()
 {
-    if (document.getElementById("administrationContinue").checked == true)
+  if (document.getElementById("administrationContinue").checked == true)
   {
     document.getElementsByClassName("administrationDate")[0].style.display = "none";
   }
@@ -22,9 +22,21 @@ function administrationUpdate()
   }
 }
 
+function dialysisUpdate()
+{
+  if (document.getElementById("dialysis").checked == true)
+  {
+    document.getElementsByClassName("frequence")[0].innerHTML = "fois par semaine";
+  }
+  else if (document.getElementById("dialysis").checked == false)
+  {
+    document.getElementsByClassName("frequence")[0].innerHTML = "fois par jour";
+  }
+}
+
 function bacteriologyUpdate()
 {
-    if (document.getElementById("bacteriologyConnue").checked == true)
+  if (document.getElementById("bacteriologyConnue").checked == true)
   {
     document.getElementsByClassName("bacteriologyInformation")[0].style.display = "block";
   }
@@ -40,6 +52,7 @@ function analysis()
   clean();
   document.getElementById("outputMolecule").innerHTML = "";
   document.getElementById("outputAdministrationMode").innerHTML = "";
+  document.getElementById("outputDialysis").innerHTML = "";
   document.getElementById("outputDose").innerHTML = "";
   document.getElementById("outputAdministrationDate").innerHTML = "";
   document.getElementById("outputAdministrationTime").innerHTML = "";
@@ -51,7 +64,6 @@ function analysis()
   document.getElementById("outputBactery").innerHTML = "";
   document.getElementById("outputCMI").innerHTML = "";
   document.getElementById("outputResistance").innerHTML = "";
-  document.getElementById("outputDialysis").innerHTML = "";
   document.getElementById("outputRenalFunction").innerHTML = "";
   document.getElementById("outputDFG").innerHTML = "";
   document.getElementById("outputAlbumine").innerHTML = "";
@@ -88,13 +100,23 @@ function analysis()
   deltat = 0;
   temps = 0;
   cres = 0;
-  cres_two = 0;
   demivie_theorique = 0;
   demivie_patient = 0;
   
   temps = (prelevementdateday - administrationdateday)+((prelevementdatemonth - administrationdatemonth)*30)+((prelevementdateyear - administrationdateyear)*365)+((prelevementtimehour - administrationtimehour)/24)+(((prelevementtimemin - administrationtimemin)/60)/24);
   
-  dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration [residuelle] [a l'equilibre] en XXX doit etre comprise entre 8 et 16 mg/L [Meropeneme] / 40 et 80 mg/L [Cefazoline] / 35 et 80 mg/L [Ceftazidime]. La concentration mesuree est donc inferieure a / superieure a / dans l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
+  if (document.getElementById("administrationContinue").checked == true)
+  {
+    administrationMode = "continue";
+    concentrationMode = "a l'equilibre";
+  }
+  else if (document.getElementById("administrationDiscontinue").checked == true)
+  {
+    administrationMode = "discontinue";
+    concentrationMode = "residuelle";
+  }
+  
+  dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration " + concentrationMode + " en " + molecule + " doit etre comprise entre 8 et 16 mg/L [Meropeneme] / 40 et 80 mg/L [Cefazoline] / 35 et 80 mg/L [Ceftazidime]. La concentration mesuree est donc inferieure a / superieure a / dans l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
   dfive = "Concentration efficace au vu des resultats de bacteriologie (" + bactery + " dans nature prelevement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " a " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliquees en reanimation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs, cette concentration ne traduit pas de surexposition.";
   dseven = "Concentration efficace au vu des resultats de bacteriologie (" + bactery + " dans nature prelevement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " a " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliquees en reanimation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs, cette concentration ne traduit pas de surexposition. Cependant il y a une degradation de la fonction renale. Un bilan de controle serait souhaitable afin de s'assurer de l'absence d'accumulation du medicament.";
   deight = "Concentration infra-therapeutique au vu des resultats de bacteriologie (" + bactery + " dans nature prelevement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " a " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliquees en reanimation (concentration libre > 4x CMI pendant 100% de l'interdose). Une adaptation de posologie est recommandee (par exemple XX mg/j) suivie d'un prelevement de controle 24 a 48h apres le changement de dose.";
@@ -124,51 +146,39 @@ function analysis()
     case "AMOXICILLINE":
       break;
     case "céfazoline":
-      demivie_theorique = 1.66;
       cefazoline();
       break;
     case "cefazoline":
-      demivie_theorique = 1.66;
       cefazoline();
       break;
     case "Céfazoline":
-      demivie_theorique = 1.66;
       cefazoline();
       break;
     case "Cefazoline":
-      demivie_theorique = 1.66;
       cefazoline();
       break;
     case "CÉFAZOLINE":
-      demivie_theorique = 1.66;
       cefazoline();
       break;
     case "CEFAZOLINE":
-      demivie_theorique = 1.66;
       cefazoline();
       break;
     case "céfépime":
-      demivie_theorique = 2;
       cefepime()
       break;
     case "cefepime":
-      demivie_theorique = 2;
       cefepime();
       break;
     case "Céfépime":
-      demivie_theorique = 2;
       cefepime()
       break;
     case "Cefepime":
-      demivie_theorique = 2;
       cefepime()
       break;
     case "CÉFÉPIME":
-      demivie_theorique = 2;
       cefepime()
       break;
     case "CEFEPIME":
-      demivie_theorique = 2;
       cefepime()
       break;
     case "céfotaxime":
@@ -285,7 +295,22 @@ function showOutput()
   {
     document.getElementById("outputAdministrationMode").innerHTML = "MODE D'ADMINISTRATION : discontinu";
   }
-  document.getElementById("outputDose").innerHTML = "DOSE : " + dose + " mg " + frequence + " fois par jour";
+  if (document.getElementById("dialysis").checked == true)
+  {
+    document.getElementById("outputDialysis").innerHTML = "PATIENT DIALYSE : oui";
+  }
+  else if (document.getElementById("dialysis").checked == false)
+  {
+    document.getElementById("outputDialysis").innerHTML = "PATIENT DIALYSE : non";
+  }
+  if (document.getElementById("dialysis").checked == true)
+  {
+    document.getElementById("outputDose").innerHTML = "DOSE : " + dose + " mg " + frequence + " fois par semaine";
+  }
+  else if (document.getElementById("dialysis").checked == false)
+  {
+    document.getElementById("outputDose").innerHTML = "DOSE : " + dose + " mg " + frequence + " fois par jour";
+  }
   if (document.getElementById("administrationDiscontinue").checked == true)
   {
     document.getElementById("outputAdministrationDate").innerHTML = "DATE D'ADMINISTRATION : " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear;
@@ -299,7 +324,14 @@ function showOutput()
   }
   else if (document.getElementById("administrationDiscontinue").checked == true)
   {
-    tau = 24/frequence;
+    if (document.getElementById("dialysis").checked == true)
+    {
+      tau = (7*24)/frequence;
+    }
+    else if (document.getElementById("dialysis").checked == false)
+    {
+      tau = 24/frequence;
+    }
     if (document.getElementById("administrationDateDay").value == "" || document.getElementById("administrationDateMonth").value == "" || document.getElementById("administrationDateYear").value == "" || document.getElementById("administrationTimeHour").value == "" || document.getElementById("administrationTimeMin").value == "" || document.getElementById("prelevementDateDay").value == "" || document.getElementById("prelevementDateMonth").value == "" || document.getElementById("prelevementDateYear").value == "" || document.getElementById("prelevementTimeHour").value == "" || document.getElementById("prelevementTimeMin").value == "")
     {
       document.getElementById("outputConcentration").innerHTML = "CONCENTRATION : donnees manquantes, impossible de determiner si la concentration residuelle est vraie ou non";
@@ -315,15 +347,10 @@ function showOutput()
       else
       {
         demivie_patient = demivie_theorique *(120/dfg);
-        cres = concentration * Math.exp((-Math.log(2))/(demivie_patient*deltat));
-        cres_two = concentration / (Math.exp((-Math.log(2))/(demivie_patient*deltat)));
+        cres = concentration * (Math.exp((-Math.log(2))/(demivie_patient*deltat)));
         if (deltat < tau)
         {
         document.getElementById("outputConcentration").innerHTML = "CONCENTRATION RESIDUELLE CALCULEE/ESTIMEE : " + cres + " mg/L";
-        }
-        else if (deltat > tau)
-        {
-          document.getElementById("outputConcentration").innerHTML = "CONCENTRATION RESIDUELLE RECALCULEE/REESTIMEE : " + cres_two + " mg/L";
         }
         else
         {
@@ -360,14 +387,6 @@ function showOutput()
     document.getElementById("outputBactery").innerHTML = "";
     document.getElementById("outputCMI").innerHTML = "";
     document.getElementById("outputResistance").innerHTML = "";
-  }
-  if (document.getElementById("dialysis").checked == true)
-  {
-    document.getElementById("outputDialysis").innerHTML = "PATIENT DIALYSE : oui";
-  }
-  else if (document.getElementById("dialysis").checked == false)
-  {
-    document.getElementById("outputDialysis").innerHTML = "PATIENT DIALYSE : non";
   }
   if (document.getElementById("dfg").value >= 90)
   {
@@ -471,6 +490,7 @@ function clearOutput()
 
 function cefepime()
 {
+  demivie_theorique = 2;
   if (document.getElementById("administrationContinue").checked == true)
   {
     if (document.getElementById("bacteriologyConnue").checked == true)
@@ -715,11 +735,17 @@ function cefepime()
   else if (document.getElementById("administrationDiscontinue").checked == true)
   {
     deltat = ((prelevementdateday - administrationdateday)*24)+((prelevementdatemonth - administrationdatemonth)*30*24)+((prelevementdateyear - administrationdateyear)*365*24)+(prelevementtimehour - administrationtimehour)+((prelevementtimemin - administrationtimemin)/60);
-    tau = 24/frequence;
+    if (document.getElementById("dialysis").checked == true)
+    {
+      tau = (7*24)/frequence;
+    }
+    else if (document.getElementById("dialysis").checked == false)
+    {
+      tau = 24/frequence;
+    }
     demivie_theorique = 2;
     demivie_patient = demivie_theorique *(120/dfg);
-    cres = concentration * Math.exp((-Math.log(2))/(demivie_patient*deltat));
-    cres_two = concentration / (Math.exp((-Math.log(2))/(demivie_patient*deltat)));
+    cres = concentration * (Math.exp((-Math.log(2))/(demivie_patient*deltat)));
     if (deltat < tau)
     {
       if (document.getElementById("dialysis").checked == true)
@@ -929,264 +955,6 @@ function cefepime()
             }
           }
           else if (cres > 20)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                document.getElementById("output2").innerHTML = "Attention, il est a noter une alteration de la fonction renale.";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefepime doit etre comprise entre 5 et 20 mg/L. La concentration mesuree est donc superieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefepime doit etre comprise entre 5 et 20 mg/L. La concentration mesuree est donc superieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-                document.getElementById("output2").innerHTML = "Une alteration de la fonction renale peut expliquer ce resultat.";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-            }
-          }
-          else
-          {
-            dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefepime doit etre comprise entre 5 et 20 mg/L. La concentration mesuree est donc dans l'intervalle therapeutique.";
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-            document.getElementById("output2").innerHTML = "";
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-        }
-      }
-    }
-    else if (deltat > tau)
-    {
-      if (document.getElementById("dialysis").checked == true)
-      {
-        if (document.getElementById("bacteriologyConnue").checked == true)
-        {
-          if (cres_two < 20)
-          {
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + deight;
-            document.getElementById("output2").innerHTML = "";
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-          else if (cres_two > 30)
-          {
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dthirteen;
-            document.getElementById("output2").innerHTML = "";
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-          else
-          {
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentyseven;
-            document.getElementById("output2").innerHTML = "";
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-        }
-        else if (document.getElementById("bacteriologyInconnue").checked == true)
-        {
-          if (cres_two < 20)
-          {
-            dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefepime doit etre comprise entre 5 et 20 mg/L. La concentration mesuree est donc inferieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-            document.getElementById("output2").innerHTML = "";
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-          else if (cres_two > 30)
-          {
-            dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefepime doit etre comprise entre 5 et 20 mg/L. La concentration mesuree est donc superieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-            document.getElementById("output2").innerHTML = "";
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-          else
-          {
-            dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefepime doit etre comprise entre 5 et 20 mg/L. La concentration mesuree est donc dans l'intervalle therapeutique.";
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-            document.getElementById("output2").innerHTML = dtwentyseven;
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-        }
-      }
-      else if (document.getElementById("dialysis").checked == false)
-      {
-        if (document.getElementById("bacteriologyConnue").checked == true)
-        {
-          fractionLibre = 0.8;
-          concentrationLibre = cres_two * fractionLibre;
-          if (concentrationLibre < 4*cmi)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : 1. " + dten;
-              document.getElementById("output2").innerHTML = "2. " + deleven;
-              document.getElementById("output3").innerHTML = "3. " + dtwelve;
-              showOutput();
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              if (document.getElementById("resistance").checked == true)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dnine;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("resistance").checked == false)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + deight;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-            }
-          }
-          if (cres_two > 20)
-          {
-            if (4*cmi > 20)
-            {
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mailtwo;
-              document.getElementById("output2").innerHTML = "";
-              document.getElementById("output3").innerHTML = "";
-              showOutput();
-            }
-            else
-            {
-              if (document.getElementById("incoherence").checked == true)
-              {
-                if (document.getElementById("dfg").value >= 90)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value < 90)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                  document.getElementById("output2").innerHTML = "Attention, il est a noter une alteration de la fonction renale.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-              else if (document.getElementById("incoherence").checked == false)
-              {
-                if (document.getElementById("dfg").value >= 90)
-                {
-                  if (cres_two > 20 && cres_two <= 30)
-                  {
-                    document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dsixteen;
-                    document.getElementById("output2").innerHTML = "";
-                    document.getElementById("output3").innerHTML = "";
-                    showOutput();
-                  }
-                  else if (cres_two > 30 && cres_two <= 60)
-                  {
-                    document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dseventeen;
-                    document.getElementById("output2").innerHTML = "";
-                    document.getElementById("output3").innerHTML = "";
-                    showOutput();
-                  }
-                  else if (cres_two > 60)
-                  {
-                    document.getElementById("output").innerHTML = "INTERPRETATIONS : " + deighteen;
-                    document.getElementById("output2").innerHTML = "";
-                    document.getElementById("output3").innerHTML = "";
-                    showOutput();
-                  }
-                }
-                else if (document.getElementById("dfg").value < 90)
-                {
-                  if (cres_two > 20 && cres_two <= 30)
-                  {
-                    document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dsixteen;
-                    document.getElementById("output2").innerHTML = "Une alteration de la fonction renale peut expliquer ce resultat.";
-                    document.getElementById("output3").innerHTML = "";
-                    showOutput();
-                  }
-                  else if (cres_two > 30 && cres_two <= 60)
-                  {
-                    document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dseventeen;
-                    document.getElementById("output2").innerHTML = "Une alteration de la fonction renale peut expliquer ce resultat.";
-                    document.getElementById("output3").innerHTML = "";
-                    showOutput();
-                  }
-                  else if (cres_two > 60)
-                  {
-                    document.getElementById("output").innerHTML = "INTERPRETATIONS : " + deighteen;
-                    document.getElementById("output2").innerHTML = "Une alteration de la fonction renale peut expliquer ce resultat.";
-                    document.getElementById("output3").innerHTML = "";
-                    showOutput();
-                  }
-                }
-              }
-            }
-          }
-          else if (cres_two <= 20 && concentrationLibre >= 4*cmi)
-          {
-            if (document.getElementById("dfg").value >= 90)
-            {
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfive;
-              document.getElementById("output2").innerHTML = "";
-              document.getElementById("output3").innerHTML = "";
-              showOutput();
-            }
-            else if (document.getElementById("dfg").value < 90)
-            {
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dseven;
-              document.getElementById("output2").innerHTML = "";
-              document.getElementById("output3").innerHTML = "";
-              showOutput();
-            }
-          }
-        }
-        else if (document.getElementById("bacteriologyInconnue").checked == true)
-        {
-          if (cres_two < 5)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : 1. " + dten;
-              document.getElementById("output2").innerHTML = "2. " + deleven;
-              document.getElementById("output3").innerHTML = "3. " + dtwelve;
-              showOutput();
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefepime doit etre comprise entre 5 et 20 mg/L. La concentration mesuree est donc inferieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-              document.getElementById("output2").innerHTML = "";
-              document.getElementById("output3").innerHTML = "";
-              showOutput();
-            }
-          }
-          else if (cres_two > 20)
           {
             if (document.getElementById("incoherence").checked == true)
             {
@@ -1501,6 +1269,8 @@ function cefepime()
 
 function cefazoline()
 {
+  demivie_theorique = 1.66;
+  fractionLibre = 0.2;
   if (document.getElementById("administrationContinue").checked == true)
   {
     if (document.getElementById("bacteriologyConnue").checked == true)
@@ -1509,7 +1279,6 @@ function cefazoline()
       {
         if (albumine < 25)
         {
-          fractionLibre = 0.2;
           concentrationTotale = 40/albumine*concentration;
           concentrationLibre = concentrationTotale * fractionLibre;
           dtwentythree = "En raison de l'hypoalbuminemie severe, il n'est pas possible d'interpreter la concentration en l'etat. En effet, en cas d'hypoalbuminemie, la concentration totale (i.e., concentration mesuree au Laboratoire) diminue alors que la concentration libre (i.e., concentration pharmacologiquement active) n'est pas impactee (Gandia et al. Antibiotics, 2023). En tenant compte de l'hypoalbuminemie, la concentration libre serait donc de " + concentrationLibre + " mg/L.";
@@ -1601,6 +1370,8 @@ function cefazoline()
           {
             if (document.getElementById("dfg").value >= 90)
             {
+              dfive = "Concentration efficace au vu des resultats de bacteriologie (" + bactery + " dans nature prelevement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " a " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliquees en reanimation (concentration libre > 4x CMI pendant 100% de l'interdose).";
+              dseven = "Concentration efficace au vu des resultats de bacteriologie (" + bactery + " dans nature prelevement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " a " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliquees en reanimation (concentration libre > 4x CMI pendant 100% de l'interdose). Cependant il y a une degradation de la fonction renale. Un bilan de controle serait souhaitable afin de s'assurer de l'absence d'accumulation du medicament.";
               document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentythree;
               document.getElementById("output2").innerHTML = dfive;
               document.getElementById("output3").innerHTML = mailthree;
@@ -1617,7 +1388,6 @@ function cefazoline()
         }
         else
         {
-          fractionLibre = 0.2;
           concentrationLibre = concentration * fractionLibre;
           if (concentrationLibre < 4*cmi)
           {
@@ -1708,14 +1478,14 @@ function cefazoline()
             if (document.getElementById("dfg").value >= 90)
             {
               document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfive;
-              document.getElementById("output2").innerHTML = mailthree;
+              document.getElementById("output2").innerHTML = "";
               document.getElementById("output3").innerHTML = "";
               showOutput();
             }
             else if (document.getElementById("dfg").value < 90)
             {
               document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dseven;
-              document.getElementById("output2").innerHTML = mailthree;
+              document.getElementById("output2").innerHTML = "";
               document.getElementById("output3").innerHTML = "";
               showOutput();
             }
@@ -1822,11 +1592,16 @@ function cefazoline()
   else if (document.getElementById("administrationDiscontinue").checked == true)
   {
     deltat = ((prelevementdateday - administrationdateday)*24)+((prelevementdatemonth - administrationdatemonth)*30*24)+((prelevementdateyear - administrationdateyear)*365*24)+(prelevementtimehour - administrationtimehour)+((prelevementtimemin - administrationtimemin)/60);
-    tau = 24/frequence;
-    demivie_theorique = 2;
+    if (document.getElementById("dialysis").checked == true)
+    {
+      tau = (7*24)/frequence;
+    }
+    else if (document.getElementById("dialysis").checked == false)
+    {
+      tau = 24/frequence;
+    }
     demivie_patient = demivie_theorique *(120/dfg);
-    cres = concentration * Math.exp((-Math.log(2))/(demivie_patient*deltat));
-    cres_two = concentration / (Math.exp((-Math.log(2))/(demivie_patient*deltat)));
+    cres = concentration * (Math.exp((-Math.log(2))/(demivie_patient*deltat)));
     if (deltat < tau)
     {
       if (document.getElementById("dialysis").checked == true)
@@ -1837,7 +1612,6 @@ function cefazoline()
           {
             if (albumine < 25)
             {
-              fractionLibre = 0.2;
               concentrationTotale = 40/albumine*cres;
               concentrationLibre = concentrationTotale * fractionLibre;
               dtwentythree = "En raison de l'hypoalbuminemie severe, il n'est pas possible d'interpreter la concentration en l'etat. En effet, en cas d'hypoalbuminemie, la concentration totale (i.e., concentration mesuree au Laboratoire) diminue alors que la concentration libre (i.e., concentration pharmacologiquement active) n'est pas impactee (Gandia et al. Antibiotics, 2023). En tenant compte de l'hypoalbuminemie, la concentration libre serait donc de " + concentrationLibre + " mg/L.";
@@ -1871,7 +1645,6 @@ function cefazoline()
             }
             else
             {
-              fractionLibre = 0.2;
               concentrationLibre = cres * fractionLibre;
               if (concentrationLibre < 4*cmi)
               {
@@ -2068,7 +1841,6 @@ function cefazoline()
           {
             if (albumine < 25)
             {
-              fractionLibre = 0.2;
               concentrationTotale = 40/albumine*cres;
               concentrationLibre = concentrationTotale * fractionLibre;
               dtwentythree = "En raison de l'hypoalbuminemie severe, il n'est pas possible d'interpreter la concentration en l'etat. En effet, en cas d'hypoalbuminemie, la concentration totale (i.e., concentration mesuree au Laboratoire) diminue alors que la concentration libre (i.e., concentration pharmacologiquement active) n'est pas impactee (Gandia et al. Antibiotics, 2023). En tenant compte de l'hypoalbuminemie, la concentration libre serait donc de " + concentrationLibre + " mg/L.";
@@ -2092,6 +1864,7 @@ function cefazoline()
               }
               else if (concentrationLibre >= 4*cmi && concentrationLibre <= 8*cmi)
               {
+                dfive = "Concentration efficace au vu des resultats de bacteriologie (" + bactery + " dans nature prelevement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " a " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliquees en reanimation (concentration libre > 4x CMI pendant 100% de l'interdose).";
                 dtwenty = "La concentration residuelle estimee, selon les parametres pharmacocinetiques issus de la litterature (demi-vie moyenne = 1.66h) et selon le DFG du patient, est d'environ " + cres + " mg/L.";
                 dtwentyfive = "D'apres les donnees de pharmacocinetique (liaison aux proteines plasmatiques de " + (100-(fractionLibre*100)) + "%), la concentration libre en Cefazoline chez ce patient  est estimee a environ " + concentrationLibre + " mg/L.";
                 document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwenty + dtwentyfive;
@@ -2102,7 +1875,6 @@ function cefazoline()
             }
             else
             {
-              fractionLibre = 0.2;
               concentrationLibre = cres * fractionLibre;
               if (concentrationLibre < 4*cmi)
               {
@@ -2125,7 +1897,7 @@ function cefazoline()
                 dtwenty = "La concentration residuelle estimee, selon les parametres pharmacocinetiques issus de la litterature (demi-vie moyenne = 1.66h) et selon le DFG du patient, est d'environ " + cres + " mg/L.";
                 document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwenty;
                 document.getElementById("output2").innerHTML = dfive;
-                document.getElementById("output3").innerHTML = mailthree;
+                document.getElementById("output3").innerHTML = "";
                 showOutput();
               }
             }
@@ -2292,431 +2064,6 @@ function cefazoline()
         }
       }
     }
-    if (deltat > tau)
-    {
-      if (document.getElementById("dialysis").checked == true)
-      {
-        if (document.getElementById("bacteriologyConnue").checked == true)
-        {
-          if (cres_two <= 80)
-          {
-            if (albumine < 25)
-            {
-              fractionLibre = 0.2;
-              concentrationTotale = 40/albumine*cres_two;
-              concentrationLibre = concentrationTotale * fractionLibre;
-              dtwentythree = "En raison de l'hypoalbuminemie severe, il n'est pas possible d'interpreter la concentration en l'etat. En effet, en cas d'hypoalbuminemie, la concentration totale (i.e., concentration mesuree au Laboratoire) diminue alors que la concentration libre (i.e., concentration pharmacologiquement active) n'est pas impactee (Gandia et al. Antibiotics, 2023). En tenant compte de l'hypoalbuminemie, la concentration libre serait donc de " + concentrationLibre + " mg/L.";
-              if (concentrationLibre < 4*cmi)
-              {
-                dtwentyfive = "D'apres les donnees de pharmacocinetique (liaison aux proteines plasmatiques de " + (100-(fractionLibre*100)) + "%), la concentration libre en Cefazoline chez ce patient  est estimee a environ " + concentrationLibre + " mg/L.";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentyfive;
-                document.getElementById("output2").innerHTML = deight;
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (concentrationLibre > 8*cmi)
-              {
-                dtwentyfive = "D'apres les donnees de pharmacocinetique (liaison aux proteines plasmatiques de " + (100-(fractionLibre*100)) + "%), la concentration libre en Cefazoline chez ce patient  est estimee a environ " + concentrationLibre + " mg/L.";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentyfive;
-                document.getElementById("output2").innerHTML = dthirteen;
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (concentrationLibre >= 4*cmi && concentrationLibre <= 8*cmi)
-              {
-                dtwentyfive = "D'apres les donnees de pharmacocinetique (liaison aux proteines plasmatiques de " + (100-(fractionLibre*100)) + "%), la concentration libre en Cefazoline chez ce patient  est estimee a environ " + concentrationLibre + " mg/L.";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentyfive;
-                document.getElementById("output2").innerHTML = dtwentysix;
-                document.getElementById("output3").innerHTML = mailthree;
-                showOutput();
-              }
-            }
-            else
-            {
-              fractionLibre = 0.2;
-              concentrationLibre = cres_two * fractionLibre;
-              if (concentrationLibre < 4*cmi)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + deight;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (concentrationLibre > 8*cmi)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dthirteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (concentrationLibre >= 4*cmi && concentrationLibre <= 8*cmi)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentysix;
-                document.getElementById("output2").innerHTML = mailthree;
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-            }
-          }
-          else if (cres_two > 80)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                if (document.getElementById("dfg").value < 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mail;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value >= 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                  document.getElementById("output2").innerHTML = "Attention, il est a noter une alteration de la fonction renale.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dthirteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                if (document.getElementById("dfg").value < 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mail;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value >= 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dthirteen;
-                  document.getElementById("output2").innerHTML = "Une alteration de la fonction renale peut expliquer ce resultat.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-            }
-          }
-        }
-        else if (document.getElementById("bacteriologyInconnue").checked == true)
-        {
-          if (cres_two < 40)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : 1. " + dten;
-              document.getElementById("output2").innerHTML = "2. " + deleven;
-              document.getElementById("output3").innerHTML = "3. " + dtwelve;
-              showOutput();
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefazoline doit etre comprise entre 40 et 80 mg/L. La concentration mesuree est donc inferieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-              document.getElementById("output2").innerHTML = "";
-              document.getElementById("output3").innerHTML = "";
-              showOutput();
-            }
-          }
-          else if (cres_two > 80)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                if (document.getElementById("dfg").value < 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mail;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value >= 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                  document.getElementById("output2").innerHTML = "Attention, il est a noter une alteration de la fonction renale.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefazoline doit etre comprise entre 40 et 80 mg/L. La concentration mesuree est donc superieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                if (document.getElementById("dfg").value < 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mail;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value >= 30)
-                {
-                  dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefazoline doit etre comprise entre 40 et 80 mg/L. La concentration mesuree est donc superieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-                  document.getElementById("output2").innerHTML = "Une alteration de la fonction renale peut expliquer ce resultat.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-            }
-          }
-          else
-          {
-            dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefazoline doit etre comprise entre 40 et 80 mg/L. La concentration mesuree est donc dans l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-            document.getElementById("output2").innerHTML = dtwentyseven;
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-        }
-      }
-      else if (document.getElementById("dialysis").checked == false)
-      {
-        if (document.getElementById("bacteriologyConnue").checked == true)
-        {
-          if (cres_two <= 80)
-          {
-            if (albumine < 25)
-            {
-              fractionLibre = 0.2;
-              concentrationTotale = 40/albumine*cres_two;
-              concentrationLibre = concentrationTotale * fractionLibre;
-              dtwentythree = "En raison de l'hypoalbuminemie severe, il n'est pas possible d'interpreter la concentration en l'etat. En effet, en cas d'hypoalbuminemie, la concentration totale (i.e., concentration mesuree au Laboratoire) diminue alors que la concentration libre (i.e., concentration pharmacologiquement active) n'est pas impactee (Gandia et al. Antibiotics, 2023). En tenant compte de l'hypoalbuminemie, la concentration libre serait donc de " + concentrationLibre + " mg/L.";
-              if (concentrationLibre < 4*cmi)
-              {
-                dtwentyfive = "D'apres les donnees de pharmacocinetique (liaison aux proteines plasmatiques de " + (100-(fractionLibre*100)) + "%), la concentration libre en Cefazoline chez ce patient  est estimee a environ " + concentrationLibre + " mg/L.";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentyfive;
-                document.getElementById("output2").innerHTML = deight;
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (concentrationLibre > 8*cmi)
-              {
-                dtwentyfive = "D'apres les donnees de pharmacocinetique (liaison aux proteines plasmatiques de " + (100-(fractionLibre*100)) + "%), la concentration libre en Cefazoline chez ce patient  est estimee a environ " + concentrationLibre + " mg/L.";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentyfive;
-                document.getElementById("output2").innerHTML = dthirteen;
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (concentrationLibre >= 4*cmi && concentrationLibre <= 8*cmi)
-              {
-                dtwentyfive = "D'apres les donnees de pharmacocinetique (liaison aux proteines plasmatiques de " + (100-(fractionLibre*100)) + "%), la concentration libre en Cefazoline chez ce patient  est estimee a environ " + concentrationLibre + " mg/L.";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentyfive;
-                document.getElementById("output2").innerHTML = dfive;
-                document.getElementById("output3").innerHTML = mailthree;
-                showOutput();
-              }
-            }
-            else
-            {
-              fractionLibre = 0.2;
-              concentrationLibre = cres_two * fractionLibre;
-              if (concentrationLibre < 4*cmi)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + deight;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (concentrationLibre > 8*cmi)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dthirteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (concentrationLibre >= 4*cmi && concentrationLibre <= 8*cmi)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfive;
-                document.getElementById("output2").innerHTML = mailthree;
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-            }
-          }
-          else if (cres_two > 80)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                if (document.getElementById("dfg").value < 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mail;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value >= 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                  document.getElementById("output2").innerHTML = "Attention, il est a noter une alteration de la fonction renale.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dthirteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                if (document.getElementById("dfg").value < 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mail;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value >= 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dthirteen;
-                  document.getElementById("output2").innerHTML = "Une alteration de la fonction renale peut expliquer ce resultat.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-            }
-          }
-        }
-        else if (document.getElementById("bacteriologyInconnue").checked == true)
-        {
-          if (cres_two < 40)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : 1. " + dten;
-              document.getElementById("output2").innerHTML = "2. " + deleven;
-              document.getElementById("output3").innerHTML = "3. " + dtwelve;
-              showOutput();
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefazoline doit etre comprise entre 40 et 80 mg/L. La concentration mesuree est donc inferieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-              document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-              document.getElementById("output2").innerHTML = "";
-              document.getElementById("output3").innerHTML = "";
-              showOutput();
-            }
-          }
-          else if (cres_two > 80)
-          {
-            if (document.getElementById("incoherence").checked == true)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                if (document.getElementById("dfg").value < 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mail;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value >= 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfourteen;
-                  document.getElementById("output2").innerHTML = "Attention, il est a noter une alteration de la fonction renale.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-            }
-            else if (document.getElementById("incoherence").checked == false)
-            {
-              if (document.getElementById("dfg").value >= 90)
-              {
-                dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefazoline doit etre comprise entre 40 et 80 mg/L. La concentration mesuree est donc superieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-                document.getElementById("output2").innerHTML = "";
-                document.getElementById("output3").innerHTML = "";
-                showOutput();
-              }
-              else if (document.getElementById("dfg").value < 90)
-              {
-                if (document.getElementById("dfg").value < 30)
-                {
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + mail;
-                  document.getElementById("output2").innerHTML = "";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-                else if (document.getElementById("dfg").value >= 30)
-                {
-                  dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefazoline doit etre comprise entre 40 et 80 mg/L. La concentration mesuree est donc superieure a l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-                  document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-                  document.getElementById("output2").innerHTML = "Une alteration de la fonction renale peut expliquer ce resultat.";
-                  document.getElementById("output3").innerHTML = "";
-                  showOutput();
-                }
-              }
-            }
-          }
-          else
-          {
-            dtwo = "D'apres les recommandations de la Societe Francaise d'Anesthesie et Reanimation et de la Societe Francaise de Pharmacologie et Therapeutique dans le cadre d'une infection non documentee, la concentration residuelle en Cefazoline doit etre comprise entre 40 et 80 mg/L. La concentration mesuree est donc dans l'intervalle therapeutique. A confronter aux resultats de Bacteriologie ou : A confronter au reste du bilan clinico-biologique (Presence d'effets indesirables ? Resultats de Bacteriologie ? Hypoalbuminemie ?)";
-            document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwo;
-            document.getElementById("output2").innerHTML = "";
-            document.getElementById("output3").innerHTML = "";
-            showOutput();
-          }
-        }
-      }
-    }
     else
     {
       if (document.getElementById("dialysis").checked == true)
@@ -2727,7 +2074,6 @@ function cefazoline()
           {
             if (albumine < 25)
             {
-              fractionLibre = 0.2;
               concentrationTotale = 40/albumine*concentration;
               concentrationLibre = concentrationTotale * fractionLibre;
               dtwentythree = "En raison de l'hypoalbuminemie severe, il n'est pas possible d'interpreter la concentration en l'etat. En effet, en cas d'hypoalbuminemie, la concentration totale (i.e., concentration mesuree au Laboratoire) diminue alors que la concentration libre (i.e., concentration pharmacologiquement active) n'est pas impactee (Gandia et al. Antibiotics, 2023). En tenant compte de l'hypoalbuminemie, la concentration libre serait donc de " + concentrationLibre + " mg/L.";
@@ -2758,7 +2104,6 @@ function cefazoline()
             }
             else
             {
-              fractionLibre = 0.2;
               concentrationLibre = concentration * fractionLibre;
               if (concentrationLibre < 4*cmi)
               {
@@ -2938,7 +2283,6 @@ function cefazoline()
           {
             if (albumine < 25)
             {
-              fractionLibre = 0.2;
               concentrationTotale = 40/albumine*concentration;
               concentrationLibre = concentrationTotale * fractionLibre;
               dtwentythree = "En raison de l'hypoalbuminemie severe, il n'est pas possible d'interpreter la concentration en l'etat. En effet, en cas d'hypoalbuminemie, la concentration totale (i.e., concentration mesuree au Laboratoire) diminue alors que la concentration libre (i.e., concentration pharmacologiquement active) n'est pas impactee (Gandia et al. Antibiotics, 2023). En tenant compte de l'hypoalbuminemie, la concentration libre serait donc de " + concentrationLibre + " mg/L.";
@@ -2960,6 +2304,7 @@ function cefazoline()
               }
               else if (concentrationLibre >= 4*cmi && concentrationLibre <= 8*cmi)
               {
+                dfive = "Concentration efficace au vu des resultats de bacteriologie (" + bactery + " dans nature prelevement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " a " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliquees en reanimation (concentration libre > 4x CMI pendant 100% de l'interdose).";
                 dtwentyfive = "D'apres les donnees de pharmacocinetique (liaison aux proteines plasmatiques de " + (100-(fractionLibre*100)) + "%), la concentration libre en Cefazoline chez ce patient  est estimee a environ " + concentrationLibre + " mg/L.";
                 document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dtwentyfive;
                 document.getElementById("output2").innerHTML = dfive;
@@ -2969,7 +2314,6 @@ function cefazoline()
             }
             else
             {
-              fractionLibre = 0.2;
               concentrationLibre = concentration * fractionLibre;
               if (concentrationLibre < 4*cmi)
               {
@@ -2987,8 +2331,8 @@ function cefazoline()
               }
               else if (concentrationLibre >= 4*cmi && concentrationLibre <= 8*cmi)
               {
-                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dive;
-                document.getElementById("output2").innerHTML = mailthree;
+                document.getElementById("output").innerHTML = "INTERPRETATIONS : " + dfive;
+                document.getElementById("output2").innerHTML = "";
                 document.getElementById("output3").innerHTML = "";
                 showOutput();
               }
