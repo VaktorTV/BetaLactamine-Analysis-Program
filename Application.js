@@ -30,6 +30,8 @@ function getInputForm()
   demivie_theorique = 0;
   demivie_patient = demivie_theorique*(120/dfg);
   cres = concentration * (Math.exp((-Math.log(2))/(demivie_patient*deltat)));
+  cmin = 0;
+  cmax = 0;
   //Conditional Variables
   if (document.getElementById("administrationContinue").checked == true)
   {
@@ -93,8 +95,22 @@ function getInputForm()
   outputalbumine = document.getElementById("outputAlbumine");
   outputincoherence = document.getElementById("outputIncoherence");
   output = document.getElementById("output");
-  output2 = document.getElementById("output2");
-  output3 = document.getElementById("output3");
+  
+  //Interpretation Variables
+  interpretation1 = "1. Concentration ind\351tectable malgr\351 un traitement instaur\351 depuis " + temps + " jours (" + dose + " mg en administration " + administrationmode + ") et une fonction r\351nale normale. Un pr\351l\350vement de contr\364le est recommand\351 afin d'\351liminer un \351ventuel probl\350me pr\351-analytique (erreur d'identit\351, inversion de tube).\n\n2. Ce r\351sultat peut \352tre expliqu\351 soit par une r\351elle sous-exposition soit par une interf\351rence pr\351-analytique (mauvaise conservation du pr\351l\350vement lors de l'acheminement). Il doit \352tre confront\351 au contexte clinique (am\351lioration des sympt\364mes ?) et contr\364le si n\351cessaire. En cas de r\351ponse clinique insuffisante, une augmentation de la posologie est recommand\351e (par exemple [XX] mg x" + frequence + " / j) ainsi qu'un pr\351l\350vement de contr\364le 48h apr\350s le changement de dose. \n\n3. Concentration infra-th\351rapeutique coh\351rente avec un arr\352t du traitement depuis le [XX]/[XX] (date arr\352t traitement).";
+  interpretation2 = "Devant les r\351sultats de bact\351riologie (" + bactery + " dans pr\351l\350vement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " \340 " + administrationtimehour + ":" + administrationtimemin + ", r\351sistante au " + molecule + "), l'efficacit\351 du traitement par " + molecule + " ne peut \352tre assur\351e.";
+  interpretation3 = "Concentration infra-th\351rapeutique au vu des r\351sultats de bact\351riologie (" + bactery + " dans pr\351l\350vement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " \340 " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliqu\351es en r\351animation (concentration libre > 4x CMI pendant 100% de l'interdose). Une adaptation de posologie est recommand\351e (par exemple [XX] mg/j) suivie d'un pr\351l\350vement de contr\364le 24 \340 48h apr\350s le changement de dose.";
+  interpretation4 = "Concentration efficace au vu des r\351sultats de bact\351riologie (" + bactery + " dans l'h\351moculture du " + administrationdateday +"/" + administrationdatemonth + "/" + administrationdateyear + " \340 " + administrationtimehour + ":" + administrationtimemin + ", breakpoint propos\351 \340 " + cmi + " mg/L) et selon les recommandations appliqu\351es en r\351animation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs, cette concentration traduit une l\351g\350re surexposition. Toutefois, le seuil d'efficacit\351 cible (Concentration libre > 4xCMI soit Concentration totale > 40 mg/l) est sup\351rieur au seuil de toxicit\351 (35 mg/l). Une diminution de posologie ou un changement d'antibiotique sont \340 discuter.";
+  interpretation5 = "Concentration anormalement \351lev\351e. Au vu des ant\351riorit\351s, du bilan r\351nal, de la posologie, et en l'absence d'effets ind\351sirables, un pr\351l\350vement de contr\364le est recommand\351 afin d'\351liminer une \351ventuelle interf\351rence pr\351-analytique (pr\351l\350vement au niveau de la perfusion " + administrationmode + " d'antibiotique ? ). Au contraire, si le(a) patient(e) pr\351sente des effets ind\351sirables, une adaptation de posologie est recommand\351e (par exemple XX mg) suivie d'un pr\351l\350vement de contr\364le 24 \340 48h apr\350s le changement de dose.";
+  interpretation6 = "Concentration sup\351rieure aux valeurs recommand\351es, associ\351e \340 un risque de neurotoxicit\351. Un arr\352t de la perfusion " + administrationmode + " pendant [XX] h suivie d'une reprise \340 posologie r\351duite (par exemple [XX] mg en perfusion " + administrationmode + ") est recommand\351, associ\351s \340 un pr\351l\350vement de contr\364le 24 \340 48h apr\350s le changement de dose.";
+  interpretation7 = "Concentration efficace au vu des r\351sultats de bact\351riologie (" + bactery + " dans pr\351l\350vement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " \340 " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + "  mg/L) et selon les recommandations appliqu\351es en r\351animation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs, cette concentration traduit une l\351g\350re surexposition. Une diminution de posologie (par exemple [XX] mg) est \340 discuter en fonction du contexte clinique (en particulier en cas de signes de neurotoxicit\351). En cas de modification de posologie, un pr\351l\350vement de contr\364le 24 \340 48h apr\350s le changement de dose est recommand\351.";
+  interpretation8 = "Concentration sup\351rieure aux valeurs recommand\351es, associ\351e \340 un risque de neurotoxicit\351. En l'absence de modification de la fonction r\351nale, une diminution de la posologie (par exemple [XX] mg) est recommand\351e, suivie d'un pr\351l\350vement de contr\364le 24 \340 48h apr\350s le changement de dose.";
+  interpretation9 = "1. Concentration sup\351rieure aux valeurs recommand\351es, associ\351e \340 un risque de neurotoxicit\351. Un arr\352t de la perfusion " + administrationmode + " pendant [XX] h suivie d'une reprise \340 posologie r\351duite (par exemple [XX] mg) est recommand\351, associ\351s \340 un pr\351l\350vement de contr\364le 24 \340 48h apr\350s le changement de dose. \n\n2. Concentration sup\351rieure aux valeurs recommand\351es, associ\351e \340 un risque accru de neurotoxicit\351. Un arr\352t de la perfusion " + administrationmode + " pendant [XX] heures est souhaitable, associ\351 \340 2 pr\351l\350vements sanguins : le premier au moment de l'arr\352t de la perfusion de " + molecule + " et le second avant reprise de la perfusion. Ces pr\351l\350vements permettront d'estimer la demi-vie d'\351limination du " + molecule + " chez ce patient en vue d'affiner son sch\351ma posologique.";
+  interpretation10 = "Concentration efficace au vu des r\351sultats de bact\351riologie (" + bactery + " dans pr\351l\350vement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " \340 " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliqu\351es en r\351animation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs, cette concentration ne traduit pas de surexposition.";
+  interpretation11 = "Concentration efficace au vu des r\351sultats de bact\351riologie (" + bactery + " dans pr\351l\350vement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " \340 " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + " mg/L) et selon les recommandations appliqu\351es en r\351animation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs, cette concentration ne traduit pas de surexposition. Cependant il y a une d\351gradation de la fonction r\351nale. Un bilan de contr\364le serait souhaitable afin de s'assurer de l'absence d'accumulation du m\351dicament.";
+  interpretation12 = "";
+   interpretation13 = "Concentration efficace au vu des r\351sultats de bact\351riologie (" + bactery + " dans pr\351l\350vement du " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear + " \340 " + administrationtimehour + ":" + administrationtimemin + ", CMI = " + cmi + "  mg/L) et selon les recommandations appliqu\351es en r\351animation (concentration libre > 4x CMI pendant 100% de l'interdose). Par ailleurs cette concentration est sup\351rieure aux valeurs recommand\351es, pouvant \352tre \340 l'origine d'une toxicit\351 (neurotoxicit\351 principalement). Une adaptation de posologie est recommand\351e (par exemple [XX] mg x" + frequence + " / j) suivie d'un pr\351l\350vement de contr\364le 24 \340 48h apr\350s le changement de dose.";
+   interpretation14 = "La concentration mesur\351e traduit une exposition en " + molecule + " en ad\351quation avec l'exposition attendue chez les patients dialys\351s (20-30 mg/L).";
 }
 
 // ##### FORM CLEAR #####
@@ -132,9 +148,10 @@ function clearForm()
   bacteriology = "";
   resistance = "";
   incoherence = "";
+  cmin = 0;
+  cmax = 0;
   event.preventDefault();
   myForm.reset();
-  location.reload();
 }
 
 // ##### OUTPUT CLEAR #####
@@ -159,15 +176,141 @@ function clearOutput()
   outputalbumine.innerHTML = "";
   outputincoherence.innerHTML = "";
   output.innerHTML = "";
-  output2.innerHTML = "";
-  output3.innerHTML = "";
+}
+
+// ##### CLEAR ALL #####
+function clearAll()
+{
+  clearOutput();
+  clearForm();
+  location.reload();
+}
+
+function showOutput(interpretation)
+{
+  outputmolecule.innerHTML = "TRAITEMENT : " + molecule;
+  outputadministrationmode.innerHTML = "MODE D'ADMINISTRATION : " + administrationmode;
+  outputdialysis.innerHTML = "PATIENT DIALYSE : " + dialysis;
+  if (dialysis == "oui")
+  {
+    outputdose.innerHTML = "DOSE : " + dose + " mg " + frequence + " fois par semaine";
+  }
+  else
+  {
+    outputdose.innerHTML = "DOSE : " + dose + " mg " + frequence + " fois par jour";
+  }
+  if (administrationmode == "discontinue")
+  {
+    outputadministrationdate.innerHTML = "DATE D'ADMINISTRATION : " + administrationdateday + "/" + administrationdatemonth + "/" + administrationdateyear;
+    outputadministrationtime.innerHTML = "HEURE D'ADMINISTRATION : " + administrationtimehour + ":" + administrationtimemin;
+  }
+  outputprelevementdate.innerHTML = "DATE DE PRELEVEMENT : " + prelevementdateday + "/" + prelevementdatemonth + "/" + prelevementdateyear;
+  outputprelevementtime.innerHTML = "HEURE DE PRELEVEMENT : " + prelevementtimehour + ":" + prelevementtimemin;
+  if (administrationmode == "continue")
+  {
+    outputconcentration.innerHTML = "CONCENTRATION A L'EQUILIBRE : " + concentration + " mg/L";
+  }
+  else if (administrationmode == "discontinue")
+  {
+    if (administrationdateday == "" || administrationdatemonth == "" || administrationdateyear == "" || administrationtimehour == "" || administrationtimemin == "" || prelevementdateday == "" || prelevementdatemonth == "" || prelevementdateyear == "" || prelevementtimehour == "" || prelevementtimemin == "")
+    {
+      outputconcentration.innerHTML = "CONCENTRATION : donnees manquantes, impossible de determiner si la concentration residuelle est vraie ou non";
+      outputconcentration.innerHTML = "INTERPRETATIONS : Donnees sur la concentration manquante, de ce fait il est difficile d'interpreter les resultats.";
+    }
+    else
+    {
+      if (dfg == 0 || dfg == "")
+      {
+        outputconcentration.innerHTML = "CONCENTRATION : donnees manquantes, impossible de determiner si la concentration residuelle est vraie ou non";
+        outputconcentration.innerHTML = "INTERPRETATIONS : Donnees sur la concentration manquante, de ce fait il est difficile d'interpreter les resultats.";
+      }
+      else
+      {
+        if (deltat < tau)
+        {
+        outputconcentration.innerHTML = "CONCENTRATION RESIDUELLE CALCULEE/ESTIMEE : " + cres + " mg/L";
+        }
+        else
+        {
+          outputconcentration.innerHTML = "CONCENTRATION RESIDUELLE VRAIE : " + concentration + " mg/L";
+        }
+      }
+    }
+  }
+  if (concentrationLibre != 0 || concentrationLibre != "")
+  {
+     outputconcentrationlibre.innerHTML = "CONCENTRATION LIBRE : " + concentrationLibre + " mg/L";
+  }
+  else if (concentrationLibre == 0 || concentrationLibre == "")
+  {
+    outputconcentrationlibre.innerHTML = "";
+  }
+  if (bacteriology == "connue")
+  {
+    outputbacteriology.innerHTML = "BACTERIOLOGIE : connue";
+    outputbactery.innerHTML = "BACTERIE : " + bactery;
+    outputcmi.innerHTML = "CMI : " + cmi + " mg/L";
+    if (resistance == "resistant")
+    {
+      outputresistance.innerHTML = "GERME RESISTANT";
+    }
+    else
+    {
+      outputresistance.innerHTML = "GERME SENSIBLE";
+    }
+  }
+  else if (bacteriology == "inconnue")
+  {
+    outputbacteriology.innerHTML = "BACTERIOLOGIE : inconnue";
+    outputbactery.innerHTML = "";
+    outputcmi.innerHTML = "";
+    outputresistance.innerHTML = "";
+  }
+  if (dfg >= 90)
+  {
+    outputrenalfunction.innerHTML = "FONCTION RENALE : normale";
+  }
+  else if (dfg >= 60 && dfg < 90)
+  {
+    outputrenalfunction.innerHTML = "FONCTION RENALE : insuffisance renale legere";
+  }
+  else if (dfg >= 30 && dfg < 60)
+  {
+    outputrenalfunction.innerHTML = "FONCTION RENALE : insuffisance renale moderee";
+  }
+  else if (dfg >= 15 && dfg < 30)
+  {
+    outputrenalfunction.innerHTML = "FONCTION RENALE : insuffisance renale severe";
+  }
+  else if (dfg < 15)
+  {
+    outputrenalfunction.innerHTML = "FONCTION RENALE : insuffisance renale terminale";
+  }
+  outputdfg.innerHTML = "DFG : " + dfg + " L/h";
+  if (molecule == "cefazoline" || molecule == "céfazoline" || molecule == "Cefazoline" || molecule == "Céfazoline" || molecule == "CEFAZOLINE" || molecule == "CÉFAZOLINE")
+  {
+    outputalbumine.innerHTML = "Albuminemie : " + albumine + " g/L";
+  }
+  else
+  {
+    outputalbumine.innerHTML = "";
+  }
+  if (incoherence == "incoherent")
+  {
+    outputincoherence.innerHTML = "INCOHERENCE AVEC FONCTION RENALE ET ANTERIORITES : oui";
+  }
+  else
+  {
+    outputincoherence.innerHTML = "INCOHERENCE AVEC FONCTION RENALE ET ANTERIORITES : non";
+  }
+  output.innerHTML = "INTERPRETATIONS : " + interpretation;
 }
 
 // ##### FORM INTERACTIVITY #####
 function interactiveForm()
 {
   //ALBUMINE DISPLAY
-  if (document.getElementById("molecule").value == "céfazoline" || document.getElementById("molecule").value == "cefazoline" || document.getElementById("molecule").value == "Céfazoline" || document.getElementById("molecule").value == "Cefazoline" || document.getElementById("molecule").value == "CÉFAZOLINE" || document.getElementById("molecule").value == "CEFAZOLINE")
+  if (document.getElementById("molecule").value == "c\351fazoline" || document.getElementById("molecule").value == "cefazoline" || document.getElementById("molecule").value == "C\351fazoline" || document.getElementById("molecule").value == "Cefazoline" || document.getElementById("molecule").value == "C\311FAZOLINE" || document.getElementById("molecule").value == "CEFAZOLINE")
   {
     document.getElementsByClassName("albumine")[0].style.display = "block";
   }
@@ -205,7 +348,7 @@ function interactiveForm()
 }
 
 // ##### SUBMIT FORM #####
-function submit()
+function submitForm()
 {
   getInputForm();
   clearOutput();
@@ -224,51 +367,51 @@ function analysis(molecule)
       break;
     case "AMOXICILLINE":
       break;
-    case "céfazoline":
+    case "c\351fazoline":
       cefazoline();
       break;
     case "cefazoline":
       cefazoline();
       break;
-    case "Céfazoline":
+    case "C\351fazoline":
       cefazoline();
       break;
     case "Cefazoline":
       cefazoline();
       break;
-    case "CÉFAZOLINE":
+    case "C\311FAZOLINE":
       cefazoline();
       break;
     case "CEFAZOLINE":
       cefazoline();
       break;
-    case "céfépime":
-      cefepime()
+    case "c\351f\351pime":
+      cefepime(administrationmode, dialysis, dose, frequence, administrationdateday, administrationdatemonth, administrationdateyear, administrationtimehour, administrationtimemin, prelevementdateday, prelevementdatemonth, prelevementdateyear, prelevementtimehour, prelevementtimemin, concentration, bacteriology, bactery, cmi, resistance, dfg, incoherence);
       break;
     case "cefepime":
-      cefepime();
+      cefepime(administrationmode, dialysis, dose, frequence, administrationdateday, administrationdatemonth, administrationdateyear, administrationtimehour, administrationtimemin, prelevementdateday, prelevementdatemonth, prelevementdateyear, prelevementtimehour, prelevementtimemin, concentration, bacteriology, bactery, cmi, resistance, dfg, incoherence);
       break;
-    case "Céfépime":
-      cefepime()
+    case "C\351f\351pime":
+      cefepime(administrationmode, dialysis, dose, frequence, administrationdateday, administrationdatemonth, administrationdateyear, administrationtimehour, administrationtimemin, prelevementdateday, prelevementdatemonth, prelevementdateyear, prelevementtimehour, prelevementtimemin, concentration, bacteriology, bactery, cmi, resistance, dfg, incoherence);
       break;
     case "Cefepime":
-      cefepime()
+      cefepime(administrationmode, dialysis, dose, frequence, administrationdateday, administrationdatemonth, administrationdateyear, administrationtimehour, administrationtimemin, prelevementdateday, prelevementdatemonth, prelevementdateyear, prelevementtimehour, prelevementtimemin, concentration, bacteriology, bactery, cmi, resistance, dfg, incoherence);
       break;
-    case "CÉFÉPIME":
-      cefepime()
+    case "C\311F\311PIME":
+      cefepime(administrationmode, dialysis, dose, frequence, administrationdateday, administrationdatemonth, administrationdateyear, administrationtimehour, administrationtimemin, prelevementdateday, prelevementdatemonth, prelevementdateyear, prelevementtimehour, prelevementtimemin, concentration, bacteriology, bactery, cmi, resistance, dfg, incoherence);
       break;
     case "CEFEPIME":
-      cefepime()
+      cefepime(administrationmode, dialysis, dose, frequence, administrationdateday, administrationdatemonth, administrationdateyear, administrationtimehour, administrationtimemin, prelevementdateday, prelevementdatemonth, prelevementdateyear, prelevementtimehour, prelevementtimemin, concentration, bacteriology, bactery, cmi, resistance, dfg, incoherence);
       break;
-    case "céfotaxime":
+    case "c\351fotaxime":
       break;
     case "cefotaxime":
       break;
-    case "Céfotaxime":
+    case "C\351fotaxime":
       break;
     case "Cefotaxime":
       break;
-    case "CÉFOTAXIME":
+    case "C\311FOTAXIME":
       break;
     case "CEFOTAXIME":
       break;
@@ -296,71 +439,72 @@ function analysis(molecule)
       break;
     case "CLOXACILLINE":
       break;
-    case "ertapénème":
+    case "ertap\351n\350me":
       break;
     case "ertapeneme":
       break;
-    case "Ertapénème":
+    case "Ertap\351n\350me":
       break;
     case "Ertapeneme":
       break;
-    case "ERTAPÉNÈME":
+    case "ERTAP\311N\310ME":
       break;
     case "ERTAPENEME":
       break;
-    case "imipénème":
+    case "imip\351n\350me":
       break;
     case "imipeneme":
       break;
-    case "Imipénème":
+    case "Imip\351n\350me":
       break;
     case "Imipeneme":
       break;
-    case "IMIPÉNÈME":
+    case "IMIP\311N\310ME":
       break;
     case "IMIPENEME":
       break;
-    case "méropénème":
+    case "m\351rop\351n\350me":
       demivie_theorique = 1;
       break;
     case "meropeneme":
       demivie_theorique = 1;
       break;
-    case "Méropénème":
+    case "M\351rop\351n\350me":
       demivie_theorique = 1;
       break;
     case "Meropeneme":
       demivie_theorique = 1;
       break;
-    case "MÉROPÉNÈME":
+    case "M\311ROP\311N\310ME":
       demivie_theorique = 1;
       break;
     case "MEROPENEME":
       demivie_theorique = 1;
       break;
-    case "pipéracilline":
+    case "pip\351racilline":
       demivie_theorique = 1;
       break;
     case "piperacilline":
       demivie_theorique = 1;
       break;
-    case "Pipéracilline":
+    case "Pip\351racilline":
       demivie_theorique = 1;
       break;
     case "Piperacilline":
       demivie_theorique = 1;
       break;
-    case "PIPÉRACILLINE":
+    case "PIP\311RACILLINE":
       demivie_theorique = 1;
       break;
     case "PIPERACILLINE":
       demivie_theorique = 1;
       break;
     default:
-      alert("Veuillez entrer un nom de molecule correcte !");
+      alert("Veuillez entrer un nom de mol\351cule correcte !");
       return false;
       break;
   }
+  return molecule;
 }
 
 // ##### MOLECULE FUNCTIONS #####
@@ -368,449 +512,564 @@ function analysis(molecule)
 //Cefepime
 function cefepime(administrationmode, dialysis, dose, frequence, administrationdateday, administrationdatemonth, administrationdateyear, administrationtimehour, administrationtimemin, prelevementdateday, prelevementdatemonth, prelevementdateyear, prelevementtimehour, prelevementtimemin, concentration, bacteriology, bactery, cmi, resistance, dfg, incoherence)
 {
-  demivie_theorique = 2;
   fractionLibre = 0.8;
-  // CONTINU CONNU DIALYSE RESISTANT INCOHERENT
-  switch(administrationmode == "continue" && bacteriology == "connue" && dialysis == "oui" && resistance == "resistant" && incoherence == "incoherent")
+  cmin = 5;
+  cmax = 35;
+  if (administrationmode == "continue")
   {
-    alert("ERREUR : Un patient dialyse ne peut pas etre administre en continu !");
-    event.preventDefault();
-    location.reload();
-  }
-  // CONTINU CONNU DIALYSE RESISTANT COHERENT
-  switch(administrationmode == "continue" && bacteriology == "connue" && dialysis == "oui" && resistance == "resistant" && incoherence == "coherent")
-  {
-    alert("ERREUR : Un patient dialyse ne peut pas etre administre en continu !");
-    event.preventDefault();
-    location.reload();
-  }
-  // CONTINU CONNU DIALYSE SENSIBLE INCOHERENT
-  switch(administrationmode == "continue" && bacteriology == "connue" && dialysis == "oui" && resistance == "sensible" && incoherence == "incoherent")
-  {
-    alert("ERREUR : Un patient dialyse ne peut pas etre administre en continu !");
-    event.preventDefault();
-    location.reload();
-  }
-  // CONTINU CONNU DIALYSE SENSIBLE COHERENT
-  switch(administrationmode == "continue" && bacteriology == "connue" && dialysis == "oui" && resistance == "sensible" && incoherence == "coherent")
-  {
-    alert("ERREUR : Un patient dialyse ne peut pas etre administre en continu !");
-    event.preventDefault();
-    location.reload();
-  }
-  // CONTINU CONNU NON-DIALYSE RESISTANT INCOHERENT
-  switch(administrationmode == "continue" && bacteriology == "connue" && dialysis == "non" && resistance == "resistant" && incoherence == "incoherent")
-  {
-    concentrationLibre = concentration * fractionLibre;
-    if (concentrationLibre < 4*cmi)
+    if (bacteriology == "connue")
     {
-      showOutput(" 1. " + incoherenceInt1  + incoherenceInt2 + incoherenceInt3, "2. " + resistanceInt,  "3. " + infraInt);
+      concentrationLibre = concentration * fractionLibre;
+      if (concentrationLibre < 4*cmi)
+      {
+        if (incoherence == "incoherent")
+        {
+          showOutput(interpretation1);
+        }
+        else if (incoherence == "coherent")
+        {
+          if (resistance == "resistant")
+          {
+            showOutput(interpretation2);
+          }
+          else if (resistance == "sensible")
+          {
+            showOutput(interpretation3);
+          }
+        }
+      }
+      else if (concentration > 35)
+      {
+        if (8*cmi > 35)
+        {
+          showOutput(interpretation4);
+        }
+        else
+        {
+          if (incoherence == "incoherent")
+          {
+            if (dfg >= 90)
+            {
+              showOutput(interpretation5);
+            }
+            else if (dfg < 90)
+            {
+              if (dfg < 30)
+              {
+                showOutput(interpretation6);
+              }
+              else if (dfg >= 30)
+              {
+                showOutput(interpretation5 + " Attention, il est \340 noter une alt\351ration de la fonction r\351nale.");
+              }
+            }
+          }
+          else if (incoherence == "coherent")
+          {
+            if (dfg >= 90)
+            {
+              if (concentration > 35 && concentration <= 45)
+              {
+                showOutput(interpretation7);
+              }
+              else if (concentration > 45 && concentration <= 60)
+              {
+                showOutput(interpretation8);
+              }
+              else if (concentration > 60)
+              {
+                showOutput(interpretation9);
+              }
+            }
+            else if (dfg < 90)
+            {
+              if (dfg < 30)
+              {
+                showOutput(interpretation6);
+              }
+              else if (dfg  >= 30)
+              {
+                if (concentration > 35 && concentration <= 45)
+                {
+                  showOutput(interpretation7 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                }
+                else if (concentration > 45 && concentration <= 60)
+                {
+                  showOutput(interpretation8 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                }
+                else if (concentration > 60)
+                {
+                  showOutput(interpretation9 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                }
+              }
+            }
+          }
+        }
+      }
+      else if (concentration <= 35 && concentrationLibre >= 4*cmi)
+      {
+        if (dfg >= 90)
+        {
+          showOutput(interpretation10);
+        }
+        else if (dfg < 90)
+        {
+          showOutput(interpretation11);
+        }
+      }
     }
-    else
+    else if (bacteriology == "inconnue")
     {
-      showOutput("Erreurs de donnees !", "", "");
-    }
-  }
-  // CONTINU CONNU NON-DIALYSE RESISTANT COHERENT
-  switch(administrationmode == "continue" && bacteriology == "connue" && dialysis == "non" && resistance == "resistant" && incoherence == "coherent")
-  {
-    concentrationLibre = concentration * fractionLibre;
-    if (concentrationLibre < 4*cmi)
-    {
-      showOutput(" 1. " + resistanceInt, "2. " + infraInt, "");
-    }
-    else
-    {
-      showOutput("Erreurs de donnees !", "", "");
-    }
-  }
-  // CONTINU CONNU NON-DIALYSE SENSIBLE INCOHERENT
-  switch(administrationmode == "continue" && bacteriology == "connue" && dialysis == "non" && resistance == "sensible" && incoherence == "incoherent")
-  {
-    concentrationLibre = concentration * fractionLibre;
-    if (concentrationLibre < 4*cmi)
-    {
-      showOutput(" 1. " + incoherenceInt1 + incoherenceInt2 + incoherenceInt3, "2. " + infraInt, "");
-    }
-    else if (concentration > 35)
-    {
-      if (8*cmi > 35)
+      if (concentration < 5)
+      {
+        if (incoherence == "incoherent")
+        {
+          showOutput(interpretation1);
+        }
+        else
+        {
+          interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc inf\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+          showOutput(interpretation12);
+        }
+      }
+      else if (concentration > 35)
+      {
+        if (incoherence == "incoherent")
+        {
+          if (dfg >= 90)
+          {
+            showOutput(interpretation5);
+          }
+          else if (dfg < 90)
+          {
+            if (dfg < 30)
+            {
+              showOutput(interpretation6);
+            }
+            else if (dfg >= 30)
+            {
+              showOutput(interpretation5 + " Attention, il est \340 noter une alt\351ration de la fonction r\351nale.");
+            }
+          }
+        }
+        else if (incoherence == "coherent")
+        {
+          if (dfg >= 90)
+          {
+            interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc sup\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+            showOutput(interpretation12);
+          }
+          else if (dfg < 90)
+          {
+            if (dfg < 30)
+            {
+              showOutput(interpretation6);
+            }
+            else if (dfg >= 30)
+            {
+              interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc sup\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+              showOutput(interpretation12 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+            }
+          }
+        }
+      }
+      else
       {
         if (dfg < 90)
         {
-          if (dfg < 30)
-          {
-            showOutput(" 1. " + incoherenceSupraInt, " 2. " + highCmiInt, "3. " + highToxInt);
-          }
-          else
-          {
-            showOutput(" 1. " + incoherenceSupraInt, " 2. " + highCmiInt, "3. " + renalFuncInt);
-          }
+          interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc dans l'intervalle th\351rapeutique.";
+          showOutput(interpretation12 + "Attention il est \340 noter une alt\351ration de la fonction r\351nale.");
         }
-        else
+        else if (dfg >= 90)
         {
-          showOutput(" 1. " + incoherenceSupraInt, " 2. " + highCmiInt, "");
+          interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc dans l'intervalle th\351rapeutique.";
+          showOutput(interpretation12);
         }
       }
-      else
+    }
+  }
+  else if (administrationmode == "discontinue")
+  {
+    demivie_theorique = 2;
+    demivie_patient = demivie_theorique*(120/dfg);
+    deltat = ((prelevementdateday - administrationdateday)*24)+((prelevementdatemonth - administrationdatemonth)*30*24)+((prelevementdateyear - administrationdateyear)*365*24)+(prelevementtimehour - administrationtimehour)+((prelevementtimemin - administrationtimemin)/60);
+    cres = concentration * (Math.exp((-Math.log(2))/(demivie_patient*deltat)));
+    if (dialysis == "oui")
+    {
+      tau = (7*24)/frequence;
+    }
+    else if (dialysis == "non")
+    {
+      tau = 24/frequence;
+    }
+    if (deltat < tau)
+    {
+      if (dialysis == "oui")
       {
-        if (concentration <= 45)
+        if (bacteriology == "connue")
         {
-          if (dfg < 90)
+          if (cres < 20)
           {
-            if (dfg < 30)
-            {
-              showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra3545Int, "3. " + highToxInt);
-            }
-            else
-            {
-              showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra3545Int, "3. " + renalFuncInt);
-            }
+            showOutput(interpretation3);
+          }
+          else if (cres > 30)
+          {
+            showOutput(interpretation13);
           }
           else
           {
-            showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra3545Int, "");
+            showOutput(interpretation14);
           }
         }
-        else if (concentration > 45 && concentration <= 60)
+        else if (bacteriology == "inconnue")
         {
-          if (dfg < 90)
+          if (cres < 20)
           {
-            if (dfg < 30)
-            {
-              showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra4560Int, "3. " + highToxInt);
-            }
-            else
-            {
-              showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra4560Int, "3. " + renalFuncInt);
-            }
+            interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc inf\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+            showOutput(interpretation12);
+          }
+          else if (cres > 30)
+          {
+            interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc sup\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+            showOutput(interpretation12);
           }
           else
           {
-            showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra4560Int, "");
+            interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc dans l'intervalle th\351rapeutique.";
+            showOutput(interpretation12 + "\n\n" + interpretation14);
           }
         }
-        else
+      }
+      else if (dialysis == "non")
+      {
+        if (bacteriology == "connue")
         {
-          if (dfg < 90)
+          concentrationLibre = cres * fractionLibre;
+          if (concentrationLibre < 4*cmi)
           {
-            if (dfg < 30)
+            if (incoherence == "incoherent")
             {
-              showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra60Int, "3. " + highToxInt);
+              showOutput(interpretation1);
+            }
+            else if (incoherence == "coherent")
+            {
+              if (resistance == "resistant")
+              {
+                showOutput(interpretation2);
+              }
+              else if (resistance == "sensible")
+              {
+                showOutput(interpretation3);
+              }
+            }
+          }
+          if (cres > 20)
+          {
+            if (4*cmi > 20)
+            {
+              showOutput(interpretation4);
             }
             else
             {
-              showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra60Int, "3. " + renalFuncInt);
+              if (incoherence == "incoherent")
+              {
+                if (dfg >= 90)
+                {
+                  showOutput(interpretation5);
+                }
+                else if (dfg < 90)
+                {
+                  showOutput(interpretation5 + " Attention, il est \340 noter une alt\351ration de la fonction r\351nale.");
+                }
+              }
+              else if (incoherence == "coherent")
+              {
+                if (dfg >= 90)
+                {
+                  if (cres > 20 && cres <= 30)
+                  {
+                    showOutput(interpretation7);
+                  }
+                  else if (cres > 30 && cres <= 60)
+                  {
+                    showOutput(interpretation8);
+                  }
+                  else if (cres > 60)
+                  {
+                    showOutput(interpretation9);
+                  }
+                }
+                else if (dfg < 90)
+                {
+                  if (cres > 20 && cres <= 30)
+                  {
+                    showOutput(interpretation7 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                  }
+                  else if (cres > 30 && cres <= 60)
+                  {
+                    showOutput(interpretation8 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                  }
+                  else if (cres > 60)
+                  {
+                    showOutput(interpretation9 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                  }
+                }
+              }
+            }
+          }
+          else if (cres <= 20 && concentrationLibre >= 4*cmi)
+          {
+            if (dfg >= 90)
+            {
+              showOutput(interpretation10);
+            }
+            else if (dfg < 90)
+            {
+              showOutput(interpretation11);
+            }
+          }
+        }
+        else if (bacteriology == "inconnue")
+        {
+          if (cres < 5)
+          {
+            if (incoherence == "incoherent")
+            {
+              showOutput(interpretation1);
+            }
+            else if (incoherence == "coherent")
+            {
+              interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc inf\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+              showOutput(interpretation12);
+            }
+          }
+          else if (cres > 20)
+          {
+            if (incoherence == "incoherent")
+            {
+              if (dfg >= 90)
+              {
+                showOutput(interpretation5);
+              }
+              else if (dfg < 90)
+              {
+                showOutput(interpretation5 + " Attention, il est \340 noter une alt\351ration de la fonction r\351nale.");
+              }
+            }
+            else if (incoherence == "coherent")
+            {
+              if (dfg >= 90)
+              {
+                interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc sup\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+                showOutput(interpretation12);
+              }
+              else if (dfg < 90)
+              {
+                interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc sup\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+                showOutput(interpretation12 + " Une alteration de la fonction r\351nale peut expliquer ce r\351sultat.");
+              }
             }
           }
           else
           {
-            showOutput(" 1. " + incoherenceSupraInt, " 2. " + supra60Int, "");
+            if (dfg < 90)
+            {
+              interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc dans l'intervalle th\351rapeutique.";
+              showOutput(interpretation12 + "Attention il est \340 noter une alt\351ration de la fonction r\351nale.");
+            }
+            else if (dfg >= 90)
+            {
+              interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc dans l'intervalle th\351rapeutique.";
+              showOutput(interpretation12);
+            }
           }
         }
       }
     }
     else
     {
-      showOutput("Erreurs de donnees !", "", "");
-    }
-  }
-  // CONTINU CONNU NON-DIALYSE SENSIBLE COHERENT
-  switch(administrationmode == "continue" && bacteriology == "connue" && dialysis == "non" && resistance == "sensible" && incoherence == "coherent")
-  {
-    concentrationLibre = concentration * fractionLibre;
-    if (concentrationLibre < 4*cmi)
-    {
-      showOutput(" 1. " + infraInt, "", "");
-    }
-    else if (concentration > 35)
-    {
-      if (8*cmi > 35)
+      if (dialysis == "oui")
       {
-        if (dfg < 90)
+        if (bacteriology == "connue")
         {
-          if (dfg < 30)
+          if (concentration < 20)
           {
-            showOutput(" 1. " + highCmiInt, "2. " + highToxInt, "");
+            showOutput(interpretation3);
+          }
+          else if (concentration > 30)
+          {
+            showOutput(interpretation13);
           }
           else
           {
-            showOutput(" 1. " + highCmiInt, "2. " + renalFuncInt, "");
+            showOutput(interpretation14);
           }
         }
-        else
+        else if (bacteriology == "inconnue")
         {
-          showOutput(" 1. " + highCmiInt, "", "");
+          if (concentration < 20)
+          {
+            interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc inf\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+            showOutput(interpretation12);
+          }
+          else if (concentration > 30)
+          {
+            interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc sup\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+            showOutput(interpretation12);
+          }
+          else
+          {
+            interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc dans l'intervalle th\351rapeutique.";
+            showOutput(interpretation12 + "\n\n" + interpretation14);
+          }
         }
       }
-      else
+      else if (dialysis == "non")
       {
-        if (concentration <= 45)
+        if (bacteriology == "connue")
         {
-          if (dfg < 90)
+          concentrationLibre = concentration * fractionLibre;
+          if (concentrationLibre < 4*cmi)
           {
-            if (dfg < 30)
+            if (incoherence == "incoherent")
             {
-              showOutput(" 1. " + supra3545Int, "2. " + highToxInt, "");
+              showOutput(interpretation1);
+            }
+            else if (incoherence == "coherent")
+            {
+              if (resistance == "resistant")
+              {
+                showOutput(interpretation2);
+              }
+              else if (resistance == "sensible")
+              {
+                showOutput(interpretation3);
+              }
+            }
+          }
+          if (concentration > 20)
+          {
+            if (4*cmi > 20)
+            {
+              showOutput(interpretation4);
             }
             else
             {
-              showOutput(" 1. " + supra3545Int, "2. " + renalFuncInt, "");
+              if (incoherence == "incoherent")
+              {
+                if (dfg >= 90)
+                {
+                  showOutput(interpretation5);
+                }
+                else if (dfg < 90)
+                {
+                  showOutput(interpretation5 + " Attention, il est \340 noter une alt\351ration de la fonction r\351nale.");
+                }
+              }
+              else if (incoherence == "coherent")
+              {
+                if (dfg >= 90)
+                {
+                  if (concentration > 20 && concentration <= 30)
+                  {
+                    showOutput(interpretation7);
+                  }
+                  else if (concentration > 30 && concentration <= 60)
+                  {
+                    showOutput(interpretation8);
+                  }
+                  else if (concentration > 60)
+                  {
+                    showOutput(interpretation9);
+                  }
+                }
+                else if (dfg < 90)
+                {
+                  if (concentration > 20 && concentration <= 30)
+                  {
+                    showOutput(interpretation7 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                  }
+                  else if (concentration > 30 && concentration <= 60)
+                  {
+                    showOutput(interpretation8 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                  }
+                  else if (concentration > 60)
+                  {
+                    showOutput(interpretation9 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+                  }
+                }
+              }
+            }
+          }
+          else if (concentration <= 20 && concentrationLibre >= 4*cmi)
+          {
+            if (dfg >= 90)
+            {
+              showOutput(interpretation10);
+            }
+            else if (dfg < 90)
+            {
+              showOutput(interpretation11);
+            }
+          }
+        }
+        else if (bacteriology == "inconnue")
+        {
+          if (concentration < 5)
+          {
+            if (incoherence == "incoherent")
+            {
+              showOutput(interpretation1);
+            }
+            else if (incoherence == "coherent")
+            {
+              interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc inf\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+              showOutput(interpretation12);
+            }
+          }
+          else if (concentration > 20)
+          {
+            if (incoherence == "incoherent")
+            {
+              if (dfg >= 90)
+              {
+                showOutput(interpretation5);
+              }
+              else if (dfg < 90)
+              {
+                showOutput(interpretation5 + " Attention, il est \340 noter une alt\351ration de la fonction r\351nale.");
+              }
+            }
+            else if (incoherence == "coherent")
+            {
+              if (dfg >= 90)
+              {
+                interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc sup\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+                showOutput(interpretation12);
+              }
+              else if (dfg < 90)
+              {
+                interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc sup\351rieure \340 l'intervalle th\351rapeutique. \300 confronter aux r\351sultats de Bact\351riologie ou : \300 confronter au reste du bilan clinico-biologique (Pr\351sence d'effets ind\351sirables ? R\351sultats de Bact\351riologie ? Hypoalbumin\351mie ?)";
+                showOutput(interpretation12 + " Une alt\351ration de la fonction r\351nale peut expliquer ce r\351sultat.");
+              }
             }
           }
           else
           {
-            showOutput(" 1. " + supra3545Int, "", "");
-          }
-        }
-        else if (concentration > 45 && concentration <= 60)
-        {
-          if (dfg < 90)
-          {
-            if (dfg < 30)
+            if (dfg < 90)
             {
-              showOutput(" 1. " + supra4560Int, "2. " + highToxInt, "");
+              interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc dans l'intervalle th\351rapeutique.";
+              showOutput(interpretation12 + "Attention il est \340 noter une alt\351ration de la fonction r\351nale.");
             }
-            else
+            else if (dfg >= 90)
             {
-              showOutput(" 1. " + supra4560Int, "2. " + renalFuncInt, "");
+            interpretation12 = "D'apr\350s les recommandations de la Soci\351te Fran\347aise d'Anesth\351sie et R\351animation et de la Soci\351t\351 Fran\347aise de Pharmacologie et Th\351rapeutique dans le cadre d'une infection non document\351e, la concentration \340 l'\351quilibre en " + molecule + " doit \352tre comprise entre " + cmin + " et " + cmax + " mg/L. La concentration mesur\351e est donc dans l'intervalle th\351rapeutique.";
+            showOutput(interpretation12);
             }
           }
-          else
-          {
-            showOutput(" 1. " + supra4560Int, "", "");
-          }
-        }
-        else
-        {
-          if (dfg < 90)
-          {
-            if (dfg < 30)
-            {
-              showOutput(" 1. " + supra60Int, "2. " + highToxInt, "");
-            }
-            else
-            {
-              showOutput(" 1. " + supra60Int, "2. " + renalFuncInt, "");
-            }
-          }
-          else
-          {
-            showOutput(" 1. " + supra60Int, "", "");
-          }
         }
       }
     }
-    else if (concentration >= 4*cmi && concentration <= 35)
-    {
-      if (document.getElementById("dfg").value >= 90)
-      {
-        showOutput(" 1. : " + efficaceInt, "", "");
-      }
-      else if (document.getElementById("dfg").value < 90)
-      {
-        showOutput(" 1. : " + efficaceInt, renalFuncInt, "");
-      }
-    }
-  }
-  // CONTINU INCONNU DIALYSE RESISTANT INCOHERENT
-  switch(administrationmode == "continue" && bacteriology == "inconnue" && dialysis == "oui" && resistance == "resistant" && incoherence == "incoherent")
-  {
-    alert("ERREUR : Un patient dialyse ne peut pas etre administre en continu !");
-    event.preventDefault();
-    location.reload();
-  }
-  // CONTINU INCONNU DIALYSE RESISTANT COHERENT
-  switch(administrationmode == "continue" && bacteriology == "inconnue" && dialysis == "oui" && resistance == "resistant" && incoherence == "coherent")
-  {
-    alert("ERREUR : Un patient dialyse ne peut pas etre administre en continu !");
-    event.preventDefault();
-    location.reload();
-  }
-  // CONTINU INCONNU DIALYSE SENSIBLE INCOHERENT
-  switch(administrationmode == "continue" && bacteriology == "inconnue" && dialysis == "oui" && resistance == "sensible" && incoherence == "incoherent")
-  {
-    alert("ERREUR : Un patient dialyse ne peut pas etre administre en continu !");
-    event.preventDefault();
-    location.reload();
-  }
-  // CONTINU INCONNU DIALYSE SENSIBLE COHERENT
-  switch(administrationmode == "continue" && bacteriology == "inconnue" && dialysis == "oui" && resistance == "sensible" && incoherence == "coherent")
-  {
-    alert("ERREUR : Un patient dialyse ne peut pas etre administre en continu !");
-    event.preventDefault();
-    location.reload();
-  }
-  // CONTINU INCONNU NON-DIALYSE RESISTANT INCOHERENT
-  switch(administrationmode == "continue" && bacteriology == "inconnue" && dialysis == "non" && resistance == "resistant" && incoherence == "incoherent")
-  {
-    if (concentration < 5)
-    {
-      showOutput(" 1. " + incoherenceInt1  + incoherenceInt2 + incoherenceInt3, "2. " + resistanceInt,  "3. " + infraInconnuInt);
-    }
-    else
-    {
-      showOutput("Erreurs de donnees !", "", "");
-    }
-  }
-  // CONTINU INCONNU NON-DIALYSE RESISTANT COHERENT
-  switch(administrationmode == "continue" && bacteriology == "inconnue" && dialysis == "non" && resistance == "resistant" && incoherence == "coherent")
-  {
-    if (concentration < 5)
-    {
-      showOutput(" 1. " + resistanceInt, "2. " + infraInconnuInt, "");
-    }
-    else
-    {
-      showOutput("Erreurs de donnees !", "", "");
-    }
-  }
-  // CONTINU INCONNU NON-DIALYSE SENSIBLE INCOHERENT
-  switch(administrationmode == "continue" && bacteriology == "inconnue" && dialysis == "non" && resistance == "sensible" && incoherence == "incoherent")
-  {
-    if (concentration < 5)
-    {
-      showOutput(" 1. " + incoherenceInt1 + incoherenceInt2 + incoherenceInt3, "2. " + infraInconnuInt, "");
-    }
-    else if (concentration > 35)
-    {
-      if (dfg < 90)
-      {
-        if (dfg < 30)
-        {
-          showOutput(" 1. " + incoherenceSupraInt, " 2. " + supraInconnuInt, "3. " + highToxInt);
-        }
-        else
-        {
-          showOutput(" 1. " + incoherenceSupraInt, " 2. " + supraInconnuInt, "3. " + renalFuncInt);
-        }
-      }
-      else
-      {
-        showOutput(" 1. " + incoherenceSupraInt, " 2. " + supraInconnuInt, "");
-      }
-    }
-    else
-    {
-      showOutput("Erreurs de donnees !", "", "");
-    }
-  }
-  // CONTINU INCONNU NON-DIALYSE SENSIBLE COHERENT
-  switch(administrationmode == "continue" && bacteriology == "inconnue" && dialysis == "non" && resistance == "sensible" && incoherence == "coherent")
-  {
-    if (concentration < 5)
-    {
-      showOutput(" 1. " + infraInconnuInt, "", "");
-    }
-    else if (concentration > 35)
-    {
-      if (dfg < 90)
-      {
-        if (dfg < 30)
-        {
-          showOutput(" 1. " + supraInconnuInt, "2. " + highToxInt, "");
-        }
-        else
-        {
-          showOutput(" 1. " + supraInconnuInt, "2. " + renalFuncInt, "");
-        }
-      }
-      else
-      {
-        showOutput(" 1. " + supraInconnuInt, "", "");
-      }
-    }
-    else if (concentration >= 5 && concentration <= 35)
-    {
-      if (document.getElementById("dfg").value >= 90)
-      {
-        showOutput(" 1. : " + efficaceInconnuInt, "", "");
-      }
-      else if (document.getElementById("dfg").value < 90)
-      {
-        showOutput(" 1. : " + efficaceInconnuInt, renalFuncInt, "");
-      }
-    }
-  }
-  // DISCONTINU CONNU DIALYSE RESISTANT INCOHERENT 
-  switch(administrationmode == "discontinue" && bacteriology == "connue" && dialysis == "oui" && resistance == "resistant" && incoherence == "incoherent")
-  {
-    
-  }
-  // DISCONTINU CONNU DIALYSE RESISTANT COHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "connue" && dialysis == "oui" && resistance == "resistant" && incoherence == "coherent")
-  {
-    
-  }
-  // DISCONTINU CONNU DIALYSE SENSIBLE INCOHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "connue" && dialysis == "oui" && resistance == "sensible" && incoherence == "incoherent")
-  {
-    
-  }
-  // DISCONTINU CONNU DIALYSE SENSIBLE COHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "connue" && dialysis == "oui" && resistance == "sensible" && incoherence == "coherent")
-  {
-    
-  }
-  // DISCONTINU CONNU NON-DIALYSE RESISTANT INCOHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "connue" && dialysis == "non" && resistance == "resistant" && incoherence == "incoherent")
-  {
-    
-  }
-  // DISCONTINU CONNU NON-DIALYSE RESISTANT COHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "connue" && dialysis == "non" && resistance == "resistant" && incoherence == "coherent")
-  {
-    
-  }
-  // DISCONTINU CONNU NON-DIALYSE SENSIBLE INCOHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "connue" && dialysis == "non" && resistance == "sensible" && incoherence == "incoherent")
-  {
-    
-  }
-  // DISCONTINU CONNU NON-DIALYSE SENSIBLE COHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "connue" && dialysis == "non" && resistance == "sensible" && incoherence == "coherent")
-  {
-    
-  }
-  // DISCONTINU INCONNU DIALYSE RESISTANT INCOHERENT 
-  switch(administrationmode == "discontinue" && bacteriology == "inconnue" && dialysis == "oui" && resistance == "resistant" && incoherence == "incoherent")
-  {
-    
-  }
-  // DISCONTINU INCONNU DIALYSE RESISTANT COHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "inconnue" && dialysis == "oui" && resistance == "resistant" && incoherence == "coherent")
-  {
-    
-  }
-  // DISCONTINU INCONNU DIALYSE SENSIBLE INCOHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "inconnue" && dialysis == "oui" && resistance == "sensible" && incoherence == "incoherent")
-  {
-    
-  }
-  // DISCONTINU INCONNU DIALYSE SENSIBLE COHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "inconnue" && dialysis == "oui" && resistance == "sensible" && incoherence == "coherent")
-  {
-    
-  }
-  // DISCONTINU INCONNU NON-DIALYSE RESISTANT INCOHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "inconnue" && dialysis == "non" && resistance == "resistant" && incoherence == "incoherent")
-  {
-    
-  }
-  // DISCONTINU INCONNU NON-DIALYSE RESISTANT COHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "inconnue" && dialysis == "non" && resistance == "resistant" && incoherence == "coherent")
-  {
-    
-  }
-  // DISCONTINU INCONNU NON-DIALYSE SENSIBLE INCOHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "inconnue" && dialysis == "non" && resistance == "sensible" && incoherence == "incoherent")
-  {
-    
-  }
-  // DISCONTINU INCONNU NON-DIALYSE SENSIBLE COHERENT
-  switch(administrationmode == "discontinue" && bacteriology == "inconnue" && dialysis == "non" && resistance == "sensible" && incoherence == "coherent")
-  {
-    
   }
 }
 

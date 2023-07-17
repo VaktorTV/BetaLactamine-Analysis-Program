@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="text/javascript" src="appConfig/form.js"></script>
+    <script type="text/javascript" src="Application.js"></script>
     <link rel="stylesheet" href="appConfig/form.css">
     <style>
     /* Chrome, Safari, Edge, Opera */
@@ -37,23 +37,23 @@
   </head>
   <body>
     <div class ="patientInformation">
-      <h1> INFORMATIONS DU PATIENT</h1>
-      <form id="myForm" action="" method="post" onSubmit="return analysis()">
+      <h1>INFORMATIONS DU PATIENT</h1>
+      <form id="myForm" method="post" onSubmit="return submitForm()">
         <label for="molecule">Traitement :</label>
-        <input list="molecules" id="molecule" onInput="moleculeUpdate()" placeholder="TRAITEMENT" required>
+        <input list="molecules" id="molecule" onInput="return interactiveForm()" placeholder="TRAITEMENT" required>
         <datalist id="molecules">
           <option value="cefazoline">
           <option value="cefepime">
         </datalist>
         <br><br>
         <label>Mode d'Administration :</label> 
-        <input type="radio" id="administrationContinue" name="administrationMode" onClick="return administrationUpdate()" required>
+        <input type="radio" id="administrationContinue" name="administrationMode" onClick="return interactiveForm()" required>
         <label for="administrationContinue">Continue</label>
-        <input type="radio" id="administrationDiscontinue" name="administrationMode" onClick="return administrationUpdate()" required>
+        <input type="radio" id="administrationDiscontinue" name="administrationMode" onClick="return interactiveForm()" required>
         <label for="administrationDiscontinue">Discontinue</label>
         <br><br>
         <label>Cas Particulier : Patient dialys&eacute; ?</label> 
-        <input type="checkbox" id="dialysis" onClick="return dialysisUpdate()">
+        <input type="checkbox" id="dialysis" onClick="return interactiveForm()">
         <label for="dialysis">Dialys&eacute;</label>
         <br><br>
         <label for="dose">Dose :</label> 
@@ -93,9 +93,9 @@
         <label>mg/L</label>
         <br><br>
         <label>Bact&eacute;riologie :</label> 
-        <input type="radio" id="bacteriologyConnue" name="bacteriology" onClick="return bacteriologyUpdate()" required>
+        <input type="radio" id="bacteriologyConnue" name="bacteriology" onClick="return interactiveForm()" required>
         <label for="bacteriologyConnue">Connue</label>
-        <input type="radio" id="bacteriologyInconnue" name="bacteriology" onClick="return bacteriologyUpdate()" required>
+        <input type="radio" id="bacteriologyInconnue" name="bacteriology" onClick="return interactiveForm()" required>
         <label for="bacteriologyInconnue">Inconnue</label>
         <br><br>
         <div class="bacteriologyInformation">
@@ -142,8 +142,8 @@
         <input type="checkbox" id="incoherence">
         <label for="incoherence">Incoh&eacute;rence</label>
         <br><br>
-        <input type="reset" value="Envoyer" onClick="return analysis()">
-        <input type="reset" value="R&eacute;initialiser" onClick="return clearOutput()">
+        <input type="reset" value="Envoyer" onClick="return submitForm()">
+        <input type="reset" value="R&eacute;initialiser" onClick="return clearAll()">
         <br><br>
       </form>
     </div>
@@ -168,8 +168,6 @@
       <p class="output" id="outputAlbumine"></p>
       <p class="output" id="outputIncoherence"></p>
       <p class="output" id="output"></p>
-      <p class="output" id="output2"></p>
-      <p class="output" id="output3"></p>
     </div>
   </body>
 </html>
