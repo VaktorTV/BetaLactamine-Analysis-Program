@@ -10,11 +10,13 @@ body {
 
 div.patientInformation {
   background-color: #F8F8FF;
-  position: absolute;
   left: 0px;
   width: 50%;
-  height: 100%;
-  padding: 10px;
+  height: 90%;
+  padding-left: 10px;
+  padding-right: 10px;
+  bottom: 0px;
+  position: absolute;
   overflow: auto;
 }
 
@@ -28,11 +30,13 @@ input {
 
 div.output {
   background-color: white;
-  position: absolute;
   right: 0px;
   width: 50%;
-  height: 100%;
-  padding: 10px;
+  height: 90%;
+  padding-left: 10px;
+  padding-right: 10px;
+  bottom: 0px;
+  position: absolute;
   overflow: auto;
 }
 
@@ -40,8 +44,28 @@ p.output {
   font-family: "Lucida Console", "Courier New", monospace;
 }
 
-h1 {
+div.titlePatient {
+  background-color: #F8F8FF;
+  left: 0px;
+  width: 50%;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
   text-align: center;
+  top: -10px;
+  position: absolute;
+}
+
+div.titleInterpretation {
+  background-color: white;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  top: -10px;
+  position: absolute;
 }
 
 .administrationDate {
@@ -53,5 +77,13 @@ h1 {
 }
 
 .albumine {
+  display: none;
+}
+
+.align {
+  display :inline-block;
+}
+
+#frequence {
   display: none;
 }
