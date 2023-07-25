@@ -48,8 +48,12 @@
         <label for="molecule">Traitement :</label>
         <input list="molecules" id="molecule" onInput="return interactiveForm()" placeholder="TRAITEMENT" required>
         <datalist id="molecules">
+          <option value="amoxicilline">
           <option value="cefazoline">
           <option value="cefepime">
+          <option value="cefotaxime">
+          <option value="ceftazidime">
+          <option value="meropeneme">
         </datalist>
         <br><br>
         <label>Mode d'Administration :</label> 
@@ -63,7 +67,7 @@
         <label for="dialysis">Dialys&eacute;</label>
         <br><br>
         <label for="dose">Dose :</label> 
-        <input type="number" style="width:40px;" max="9999" maxlength="4" id="dose" placeholder="XXXX">
+        <input type="number" style="width:40px;" max="99999" maxlength="4" id="dose" placeholder="XXXX">
         <label for="dose">mg</label>
         <div class="align">
           <input type="number" style="width:20px;" min="1" max="9" maxlength="1" id="frequence" placeholder="N">
@@ -116,10 +120,13 @@
             <option value="Citrobacter freundii">
             <option value="Citrobacter koseri">
             <option value="Enterobacter cloacae">
+            <option value="Enterococcus faecalis">
             <option value="Escherichia coli">
+            <option value="Haemophilus influenzae">
             <option value="Hafnia alvei">
             <option value="Klebsiella oxytoca">
             <option value="Klebsiella pneumoniae">
+            <option value="Listeria monocytogenes">
             <option value="Morganella sp">
             <option value="Proteus mirabilis">
             <option value="Proteus vulgaris">
@@ -128,16 +135,19 @@
             <option value="Serratia marcescens">
             <option value="Staphylococcus aureus">
             <option value="Stenotrophomonas maltophilia">
+            <option value="Streptococcus agalactiae">
+            <option value="Streptococcus mitis">
+            <option value="Streptococcus sanguinis">
           </datalist>
           <br><br>
           <label>CMI :</label> 
-          <input type="radio" id="cmiConnu" name="cmi" onClick="return interactiveForm()" required>
-          <label for="cmiConnu">Connu</label>
-          <input type="radio" id="cmiInconnu" name="cmi" onClick="return interactiveForm()" required>
-          <label for="cmiInconnu">Inconnu</label>
+          <input type="radio" id="cmiConnu" name="cmi" onClick="return interactiveForm()">
+          <label for="cmiConnu">Connue</label>
+          <input type="radio" id="cmiInconnu" name="cmi" onClick="return interactiveForm()">
+          <label for="cmiInconnu">Inconnue</label>
           <br><br>
           <label class="cmiDisplay">Seuil :</label> 
-          <input type="number" style="width:45px;" max = "9.9" maxlength="3" id="cmi" placeholder="0.0" required>
+          <input type="number" style="width:45px;" max = "9.9" maxlength="3" id="cmi" placeholder="0.0">
           <br><br>
           <label>Germe R&eacute;sistant ?</label> 
           <input type="checkbox" id="resistance">
@@ -154,11 +164,30 @@
           <label>g/L</label>
           <br><br>
         </div>
+        <div class="demivie">
+          <label>Caract&eacute;ristiques Patient :</label>
+          <br>
+          <input type="radio" id="adulteIV" name="demivie" onClick="return interactiveForm()">
+          <label for"adulteIV">Adulte (Administration IV)</label>
+          <br>
+          <input type="radio" id="adulteIM" name="demivie" onClick="return interactiveForm()">
+          <label for"adulteIM">Adulte (Administration IM)</label>
+          <br>
+          <input type="radio" id="enfant" name="demivie" onClick="return interactiveForm()">
+          <label for"enfant">Enfant</label>
+          <br>
+          <input type="radio" id="nouveaune" name="demivie" onClick="return interactiveForm()">
+          <label for"nouveaune">Nouveau N&eacute;</label>
+          <br>
+          <input type="radio" id="premature" name="demivie" onClick="return interactiveForm()">
+          <label for"premature">Pr&eacute;matur&eacute;</label>
+          <br><br>
+        </div>
         <label>Incoh&eacute;rence concentration</label> 
         <input type="checkbox" id="incoherence">
         <label for="incoherence">Incoh&eacute;rence</label>
         <br><br>
-        <input type="reset" value="Envoyer" onClick="return submitForm()">
+        <input type="submit" value="Envoyer" onClick="return submitForm()">
         <input type="reset" value="R&eacute;initialiser" onClick="return clearAll()">
         <br><br>
       </form>

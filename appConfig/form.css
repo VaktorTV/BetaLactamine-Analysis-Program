@@ -80,6 +80,10 @@ div.titleInterpretation {
   display: none;
 }
 
+.demivie {
+  display: none;
+}
+
 .align {
   display :inline-block;
 }
