@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="text/javascript" src="appConfig/Application.js"></script>
-    <link rel="stylesheet" href="appConfig/form.css">
+    <script type="text/javascript" src="Application.js"></script>
+    <link rel="stylesheet" href="form.css">
     <style>
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
@@ -49,14 +49,15 @@
         <input list="molecules" id="molecule" onInput="return interactiveForm()" placeholder="TRAITEMENT" required>
         <datalist id="molecules">
           <option value="amoxicilline">
-          <option value="cefazoline">
-          <option value="cefepime">
-          <option value="cefotaxime">
+          <option value="c&eacute;fazoline">
+          <option value="c&eacute;f&eacute;pime">
+          <option value="c&eacute;fotaxime">
           <option value="ceftazidime">
           <option value="ceftriaxone">
           <option value="cloxacilline">
-          <option value="imipeneme">
-          <option value="meropeneme">
+          <option value="imip&eacute;n&egrave;me">
+          <option value="m&eacute;rop&eacute;n&egrave;me">
+          <option value="pip&eacute;racilline">
         </datalist>
         <br><br>
         <label>Mode d'Administration :</label> 
@@ -107,6 +108,12 @@
         <input type="number" style="width:45px;" step="0.01" max="999.99" maxlength="6" id="concentration" placeholder="00.00" required>
         <label>mg/L</label>
         <br><br>
+        <div class = "tazobactam">
+          <label for="tazobactam">Concentration Tazobactam :</label>
+          <input type="number" style="width:45px;" step="0.01" max="999.99" maxlength="6" id="tazobactam" placeholder="00.00" required>
+          <label>mg/L</label>
+          <br><br>
+        </div>
         <label>Bact&eacute;riologie :</label> 
         <input type="radio" id="bacteriologyConnue" name="bacteriology" onClick="return interactiveForm()" required>
         <label for="bacteriologyConnue">Connue</label>
@@ -153,7 +160,7 @@
           <label for="cmiInconnu">Inconnue</label>
           <br><br>
           <label class="cmiDisplay">Seuil :</label> 
-          <input type="number" style="width:45px;" max = "9.9" maxlength="3" id="cmi" placeholder="0.0">
+          <input type="number" style="width:45px;" max = "99.9" maxlength="3" id="cmi" placeholder="0.0">
           <br><br>
           <label>Germe R&eacute;sistant ?</label> 
           <input type="checkbox" id="resistance">
@@ -161,7 +168,7 @@
           <br><br>
         </div>
         <label for="dfg">DFG :</label> 
-        <input type="number" style="width:40px;" max="120" maxlength="3" id="dfg" placeholder="DFG">
+        <input type="number" style="width:40px;" max="999" maxlength="3" id="dfg" placeholder="DFG">
         <label>mL/min</label>
         <br><br>
         <div class="albumine">
@@ -208,6 +215,7 @@
       <p class="output" id="outputPrelevementTime"></p>
       <p class="output" id="outputConcentration"></p>
       <p class="output" id="outputConcentrationLibre"></p>
+      <p class="output" id="outputTazobactam"></p>
       <p class="output" id="outputBacteriology"></p>
       <p class="output" id="outputBactery"></p>
       <p class="output" id="outputCMI"></p>
@@ -218,6 +226,7 @@
       <p class="output" id="outputAlbumine"></p>
       <p class="output" id="outputIncoherence"></p>
       <p class="output" id="output"></p>
+      <p class="output" id="outputInterpretation"></p>
     </div>
   </body>
 </html>
